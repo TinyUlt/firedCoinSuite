@@ -10,12 +10,13 @@ class Simulation{
 
 
         this.GlobalData = GlobalData;
-
+        this.callback = callback;
         this.binance = (new Binance()).core;
         this.binance.options({
             'APIKEY':GlobalData.serverInfo.APIKEY,
             'APISECRET':GlobalData.serverInfo.APISECRET
         });
+        this.hasBalance = false;
 
         this.currency = this.GlobalData.currency;
         this.goods = this.GlobalData.goods;
@@ -116,36 +117,45 @@ class Simulation{
         }
     }
 
+    managerAsksBids(nowTick, symbol, ask, bid){
+        this.simulTick = nowTick;
+        this.update(symbol,ask, bid);
+        this.callback(nowTick, symbol, ask, bid);
+        this.updateAvgMinMaxPrice();
+    }
     depthCache( symbol, callback){
         let self = this;
         let roll = null;
         if(this.GlobalData.simulationConfig.useRealData === 1){
 
-            roll = function(){
-                if (self.GlobalData.run === true && self.GlobalData.delayUpdate === false ){
+            if(this.GlobalData.simulationConfig.useManagerAsksBids === 0){
+                roll = function(){
+                    if (self.GlobalData.run === true && self.GlobalData.delayUpdate === false ){
 
-                    self.binance.depthRequest(symbol,function(error,json){
-                        process.stdout.write((new Date()).getSeconds()+' ');
-                        if (error === null){
-                            let nowTick = (new Date()).valueOf();
-                            self.simulTick = nowTick;
+                        self.binance.depthRequest(symbol,function(error,json){
+                            process.stdout.write((new Date()).getSeconds()+' ');
+                            if (error === null){
+                                let nowTick = (new Date()).valueOf();
+                                self.simulTick = nowTick;
 
-                            let ask =parseFloat(json.asks[0][0]);
-                            let bid =parseFloat(json.bids[0][0]);
-                            // console.log(ask, bid);
+                                let ask =parseFloat(json.asks[0][0]);
+                                let bid =parseFloat(json.bids[0][0]);
+                                // console.log(ask, bid);
 
-                            self.update(symbol,ask, bid);
-                            callback(nowTick, symbol, ask, bid);
-                            self.updateAvgMinMaxPrice();
-                        } else {
-                            console.log(error);
-                        }
+                                self.update(symbol,ask, bid);
+                                callback(nowTick, symbol, ask, bid);
+                                self.updateAvgMinMaxPrice();
+                            } else {
+                                console.log(error);
+                            }
 
-                    },5);
+                        },5);
+                    }
+
+                    setTimeout(roll, 1000);
                 }
-
-                setTimeout(roll, 1000);
             }
+
         }else{
             roll = function(){
                 if(self.GlobalData.run === true && self.GlobalData.dbchart !== null){
@@ -179,7 +189,7 @@ class Simulation{
 
     init(balances){
 
-
+        this.hasBalance = true;
         this.Price[this.commission+this.currency].ask=this.GlobalData.simulationConfig[this.commission+this.currency];
         this.Price[this.commission+this.goods].ask=this.GlobalData.simulationConfig[this.commission+this.goods];
 

@@ -14,6 +14,7 @@
   "useRealData":1,
   "useRealBalance":1,
   "useRealOder":1,
+  "useManagerAsksBids":1,
 
   "balances":{
     "BTC": {"available": 0},

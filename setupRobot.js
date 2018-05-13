@@ -2,6 +2,7 @@ let fs = require('fs');
 let assert = require('assert');
 let FServer = require('./internal/server.js');
 let MongoClient = require('mongodb').MongoClient;
+let Binance = require('./node-binance-api.js');
 let firedCoinInfo = JSON.parse(fs.readFileSync(process.env.FiredCoinInfoPath));
 
 MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
@@ -9,6 +10,12 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
     console.log('Connected correctly to server.');
 
     let servers=[];
+    let binance = (new Binance()).core;
+
+    binance.options({
+        'APIKEY':firedCoinInfo.requestAsksBids.APIKEY,
+        'APISECRET':firedCoinInfo.requestAsksBids.APISECRET
+    });
 
     let dbchart = db.db(firedCoinInfo.requestAsksBids.name);
     let dbServersManager=db.db(firedCoinInfo.managerName);
@@ -38,6 +45,33 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
         updateInfo();
         getConfig();
         setTimeout(update,1000);
+    }
+    function getDepth(){
+
+        if (simulationConfig.useManagerAsksBids && simulationConfig.useRealData === 1){
+            binance.depthRequest(firedCoinInfo.SYMBOL,function(error,json){
+                process.stdout.write((new Date()).getSeconds()+' ');
+                if (error === null){
+                    let nowTick = (new Date()).valueOf();
+                    // self.simulTick = nowTick;
+
+                    let ask =parseFloat(json.asks[0][0]);
+                    let bid =parseFloat(json.bids[0][0]);
+                    // console.log(ask, bid);
+
+                    // self.update(symbol,ask, bid);
+                    // callback(nowTick, symbol, ask, bid);
+                    // self.updateAvgMinMaxPrice();
+                    for(let i = 0; i < firedCoinInfo.server.length; i ++){
+                        let server = servers[i];
+                        server.GlobalData.simulation.managerAsksBids(nowTick, firedCoinInfo.SYMBOL, ask, bid)
+                    }
+                } else {
+                    console.log(error);
+                }
+
+            },5);
+        }
     }
 
     function updateInfo() {
