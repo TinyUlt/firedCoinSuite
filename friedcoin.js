@@ -1,5 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 let assert = require('assert');
+let fs = require('fs');
 let Environment = require("./internal/Robot/Environment");
 
 let FiredCoinInfo = process.env.FiredCoinInfoPath;
