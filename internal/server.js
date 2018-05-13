@@ -7,6 +7,8 @@ class FServer{
     constructor(serverInfo, config, simulationConfig, db, robotDatabase, chartDatabase){
 
         let self = this;
+        this.infoData=null;
+        this.serverInfo=serverInfo;
 
         //全局变量
         this.GlobalData = {
@@ -70,8 +72,9 @@ class FServer{
             delayUpdate:false,
             startTime:(new Date()).toLocaleString(),
             simulationConfig:simulationConfig,
-            serverInfo:serverInfo,
-            controll : null
+
+            controll : null,
+            run:false,
 
         };
 
@@ -228,26 +231,7 @@ class FServer{
             self.getConfig();
         });
     }
-    getInfo(){
-        let self = this;
-        self.GlobalData.dbase.collection("info"). find({_id:0}).toArray(function(err, result) { // 返回集合中所有数据
-            if (err) throw err;
 
-            if(result.length !== 0){
-                let data = result[0];
-
-                if(data.earnSum !== null){
-                    self.GlobalData.earnSum = data.earnSum;
-                }
-                if(data.robotCount !== null){
-                    self.GlobalData.robotCount = data.robotCount;
-                }
-                if(data.commissionFees !== null){
-                    self.GlobalData.commissionFees = data.commissionFees;
-                }
-            }
-        });
-    }
     updateInfo(tick){
         let self = this;
         self.GlobalData.simulation.balance(function (error, originBalance, realBalance, simulBalance, commissionPrice) {
@@ -256,7 +240,7 @@ class FServer{
                 console.log(error);
                 return;
             }
-            let setData = {
+            self.infoData = {
                 config:self.GlobalData.controll,
                 originBalance:{
                     [self.GlobalData.goods]:originBalance[self.GlobalData.goods].available,
@@ -313,7 +297,7 @@ class FServer{
                 maxPrice:self.GlobalData.maxPrice,
                 // fallingRate:self.GlobalData.fallingRate,
                 avgBuyEnable:self.GlobalData.avgBuyEnable,
-                serverId:self.GlobalData.serverInfo.name,
+                serverId:self.serverInfo.name,
                 // fallingPrice:managers[0].falling * self.GlobalData.fallingRate,
                 startTime:self.GlobalData.startTime,
                 updateTime:(new Date(tick)).toLocaleString(),
@@ -322,7 +306,7 @@ class FServer{
 
             };
             let where = {_id:0};
-            let updateStr = {$set: setData};
+            let updateStr = {$set: self.infoData};
             let collectionName = "info";
 
             self.GlobalData.dbase.collection(collectionName).update(where,updateStr,{upsert:true}, function(err) {

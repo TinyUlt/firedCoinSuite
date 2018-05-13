@@ -119,7 +119,7 @@ class Simulation{
         if(this.GlobalData.simulationConfig.useRealData === 1){
 
             roll = function(){
-                if (self.GlobalData.delayUpdate === false ){
+                if (self.GlobalData.run === true && self.GlobalData.delayUpdate === false ){
 
                     binance.depthRequest(symbol,function(error,json){
                         process.stdout.write((new Date()).getSeconds()+' ');
@@ -145,7 +145,7 @@ class Simulation{
             }
         }else{
             roll = function(){
-                if(self.GlobalData.dbchart !== null){
+                if(self.GlobalData.run === true && self.GlobalData.dbchart !== null){
                     self.skipTime++;
 
                     self.GlobalData.dbchart.collection("t_1s").find({_id:{$gt:self.startTime}}).sort({_id:1}).limit(1).toArray(function(err, result) { // 返回集合中所有数据
@@ -165,6 +165,9 @@ class Simulation{
 
                         setTimeout(roll, 1000/self.GlobalData.simulationConfig.getDataSpeed);
                     });
+                }
+                if(self.GlobalData.run === false ){
+                    setTimeout(roll, 1000);
                 }
             };
         }
