@@ -69,11 +69,11 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
 
     }
     function setConfig(){
-        let self = this;
+
         let where = {_id:0};
         let updateStr = {$set: managerConfig};
 
-        self.GlobalData.dbase.collection("config").update(where,updateStr,{upsert:true}, function(err) {
+        dbServersManager.collection("config").update(where,updateStr,{upsert:true}, function(err) {
             if (err) throw err;
         });
     }
