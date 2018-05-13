@@ -30,7 +30,7 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
         let robotDatabase = db.db(firedCoinInfo.server[i].name);
         servers[i] = new FServer( firedCoinInfo.server[i],operatorConfig, simulationConfig,db, robotDatabase, dbchart);
     }
-
+    update();
 
     function update(){
 
