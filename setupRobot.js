@@ -26,7 +26,7 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
     let managerConfig={};
     for(let i = 0; i < firedCoinInfo.server.length; i ++){
         managerConfig[firedCoinInfo.server[i].name] = {};
-        managerConfig[firedCoinInfo.server[i].name].run = false;
+        managerConfig[firedCoinInfo.server[i].name].run = true;
         let robotDatabase = db.db(firedCoinInfo.server[i].name);
         servers[i] = new FServer( firedCoinInfo.server[i],operatorConfig, simulationConfig,db, robotDatabase, dbchart);
     }
@@ -48,12 +48,11 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
             if(server.infoData !== null){
                 managerInfo[server.infoData.serverId] = {
                     run:managerConfig[server.serverInfo.name].run,
-                    startTime:server.infoData.startTime,
+                    leftUSDT:server.infoData.realBalance.USDT,
+                    costUSDT:server.infoData.simulDf.USDT,
+                    Property:server.infoData.simulDf.Property,
+                    earnUSDT:server.infoData.earnSum,
                     updateTime:server.infoData.updateTime,
-                    realBalance:server.infoData.realBalance,
-                    simulDf:server.infoData.simulDf,
-                    earnSum:server.infoData.earnSum,
-
                 };
                 hasValue = true;
             }
