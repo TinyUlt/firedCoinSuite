@@ -255,6 +255,7 @@ class Simulation{
                 binance.balance(function(error, balances) {
 
                     if(error === null){
+                        console.log(self.GlobalData.serverInfo.name,balances[self.goods].available);
 
                         if ( typeof balances[self.goods] !== undefined ) {
                             self.RealBalance[self.goods].available = parseFloat(balances[self.goods].available);
