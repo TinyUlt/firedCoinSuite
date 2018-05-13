@@ -2,7 +2,7 @@ let fs = require('fs');
 let assert = require('assert');
 let FServer = require('./internal/server.js');
 let MongoClient = require('mongodb').MongoClient;
-let Binance = require('./node-binance-api.js');
+let Binance = require('./internal/node-binance-api.js');
 let firedCoinInfo = JSON.parse(fs.readFileSync(process.env.FiredCoinInfoPath));
 
 MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
