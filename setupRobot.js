@@ -41,9 +41,10 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
     }
 
     function updateInfo() {
-        let managerInfo = null;
+        let managerInfo = {};
         for(let i = 0; i < firedCoinInfo.server.length; i ++){
             let server = servers[i];
+            managerInfo[server.infoData.serverId] = null;
             if(server.infoData !== null){
                 managerInfo[server.infoData.serverId] = {
                     run:managerConfig[server.serverInfo.name].run,
@@ -52,19 +53,15 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
                     realBalance:server.infoData.realBalance,
                     simulDf:server.infoData.simulDf,
                     earnSum:server.infoData.earnSum,
-
                 }
             }
-
         }
-        if(managerInfo !== null){
-            let where = {_id:0};
-            let updateStr = {$set: managerInfo};
+        let where = {_id:0};
+        let updateStr = {$set: managerInfo};
 
-            dbServersManager.collection("info").update(where,updateStr,{upsert:true}, function(err) {
-                if (err) throw err;
-            });
-        }
+        dbServersManager.collection("info").update(where,updateStr,{upsert:true}, function(err) {
+            if (err) throw err;
+        });
 
 
     }
