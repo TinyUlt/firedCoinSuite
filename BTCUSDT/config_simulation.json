@@ -9,11 +9,11 @@
     "useRealOder":"使用真实订单",
     "getDataSpeed":"运行速率"
   },
-  "getDataSpeed":100,
+  "getDataSpeed":1,
   "startTime":"2018-5-13 20:31:23",
-  "useRealData":0,
-  "useRealBalance":0,
-  "useRealOder":0,
+  "useRealData":1,
+  "useRealBalance":1,
+  "useRealOder":1,
 
   "balances":{
     "BTC": {"available": 0},
