@@ -14,6 +14,10 @@ class Simulation{
             'APISECRET':GlobalData.serverInfo.APISECRET
         });
 
+        console.log(binance.test);
+        binance.test = "222222222222";
+        console.log(binance.test);
+
         this.currency = this.GlobalData.currency;
         this.goods = this.GlobalData.goods;
         this.commission = this.GlobalData.commission;

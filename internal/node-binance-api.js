@@ -1447,6 +1447,7 @@ module.exports = function() {
             else if ( substring === 'BNB' ) return 'BNB';
             else if ( symbol.substr(-4) === 'USDT' ) return 'USDT';
         },
+        test:"11111111111111",
         websockets: {
             userData: function userData(callback, execution_callback = false, subscribed_callback = false) {
                 let reconnect = function() {
