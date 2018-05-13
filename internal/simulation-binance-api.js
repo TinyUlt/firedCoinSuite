@@ -1,22 +1,25 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 const nodemailer = require('./mailer');
-let binance = require('./node-binance-api.js');
+let Binance = require('./node-binance-api.js');
+
 let fs = require('fs');
 
 class Simulation{
     constructor(GlobalData, callback) {
 
+
         this.GlobalData = GlobalData;
 
-        binance.options({
+        this.binance = (new Binance()).core;
+        this.binance.options({
             'APIKEY':GlobalData.serverInfo.APIKEY,
             'APISECRET':GlobalData.serverInfo.APISECRET
         });
 
-        console.log(binance.test);
-        binance.test = "222222222222";
-        console.log(binance.test);
+        console.log(this.binance.test);
+        this.binance.test = "222222222222";
+        console.log(this.binance.test);
 
         this.currency = this.GlobalData.currency;
         this.goods = this.GlobalData.goods;
@@ -63,7 +66,7 @@ class Simulation{
 
 
         if(this.GlobalData.simulationConfig.useRealBalance === 1){
-            binance.balance(function(error, balances) {
+            self.binance.balance(function(error, balances) {
 
                 if(error === null){
 
@@ -125,7 +128,7 @@ class Simulation{
             roll = function(){
                 if (self.GlobalData.run === true && self.GlobalData.delayUpdate === false ){
 
-                    binance.depthRequest(symbol,function(error,json){
+                    self.binance.depthRequest(symbol,function(error,json){
                         process.stdout.write((new Date()).getSeconds()+' ');
                         if (error === null){
                             let nowTick = (new Date()).valueOf();
@@ -227,7 +230,7 @@ class Simulation{
 
         let self = this;
         if(this.GlobalData.simulationConfig.useRealData){
-            binance.prices(function(error, ticker) {
+            self.binance.prices(function(error, ticker) {
 
                 if(error===null){
 
@@ -256,7 +259,7 @@ class Simulation{
         let self = this;
         if ( callback ){
             if(self.GlobalData.simulationConfig.useRealBalance === 1){
-                binance.balance(function(error, balances) {
+                self.binance.balance(function(error, balances) {
 
                     if(error === null){
                         console.log(self.GlobalData.serverInfo.name,balances[self.goods].available);
@@ -319,7 +322,7 @@ class Simulation{
     }
     buyCommission(){
         //手续费不够，就买入
-        binance.marketBuy("BNBUSDT", 0.1, {type:'MARKET', newOrderRespType:"FULL"}, function(error, response) {
+        this.binance.marketBuy("BNBUSDT", 0.1, {type:'MARKET', newOrderRespType:"FULL"}, function(error, response) {
             console.log("buy BNBUSDT");
         });
     }
@@ -329,7 +332,7 @@ class Simulation{
 
         if(ret.success === 1) {
             if(this.GlobalData.simulationConfig.useRealOder === 1){
-                binance.marketBuy(symbol, quantity, flags, callback);
+                this.binance.marketBuy(symbol, quantity, flags, callback);
             }else{
                 this.simulMarketBuy(ret.commissionNeed, symbol, quantity, flags, callback);
             }
@@ -343,7 +346,7 @@ class Simulation{
 
         if(ret.success === 1){
             if(this.GlobalData.simulationConfig.useRealOder === 1){
-                binance.marketSell(symbol, quantity, flags, callback);
+                this.binance.marketSell(symbol, quantity, flags, callback);
             }else{
                 this.simulMarketSell(ret.commissionNeed, symbol, quantity, flags, callback);
             }
