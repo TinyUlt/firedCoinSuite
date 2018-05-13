@@ -17,10 +17,6 @@ class Simulation{
             'APISECRET':GlobalData.serverInfo.APISECRET
         });
 
-        console.log(this.binance.test);
-        this.binance.test = "222222222222";
-        console.log(this.binance.test);
-
         this.currency = this.GlobalData.currency;
         this.goods = this.GlobalData.goods;
         this.commission = this.GlobalData.commission;
@@ -259,7 +255,7 @@ class Simulation{
         let self = this;
         if ( callback ){
             if(self.GlobalData.simulationConfig.useRealBalance === 1){
-                self.binance.balance(function(error, balances) {
+                // self.binance.balance(function(error, balances) {
 
                     if(error === null){
                         console.log(self.GlobalData.serverInfo.name,balances[self.goods].available);
