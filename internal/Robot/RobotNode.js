@@ -1,26 +1,74 @@
 //机器人节点
 class RobotNode  {
 
-    constructor(GlobalData, managerId) {
+    constructor(GlobalData, managerId, id) {
 
         this.managerId = managerId;
         this.GlobalData = GlobalData;
+        this.id = id;
+        this.hasBought = false;
     }
     changeBuy(currencyPerGoods){
 
         this.calcuBuy(currencyPerGoods);
     }
-    newNode(
+    delayUpdate(){
+        let self = this;
+        console.log("delayUpdate");
+        this.GlobalData.delayUpdate = true;
+        setTimeout(() => {
+            console.log("delayOver");
+            self.GlobalData.delayUpdate = false;
+        }, 10000);
+    }
+    recieveBuy(error, response){
+        if(error !== null){
+
+            console.log("statusCode",error.statusCode);
+            //服务器钱不够
+            if(error.statusCode === 400){
+
+            }
+            //本地模拟钱不够
+            if(error.statusCode === 0){
+
+            }
+            //速率超标
+            else if(error.statusCode === 429){
+
+                this.delayUpdate();
+            }
+
+        }else{
+            if(response.status !== undefined && response.status === 'FILLED'  ){
+                let value = response;
+                for(let i = 0; i < value.fills.length; i++){
+
+                    let price = parseFloat(value.fills[i].price);
+                    let qty = parseFloat(value.fills[i].qty);
+                    let commission = parseFloat(value.fills[i].commission);
+                    this.buy( value.transactTime, price ,qty, commission);
+                    this.GlobalData.simulation.buyChangeBalance(price,qty,commission);
+
+                    this.GlobalData.buyTradCount ++;
+                }
+
+            }else{
+                console.log("marketBuy failed")
+            }
+        }
+    }
+
+    buy(
         nowTick,
-        id,
         currencyPerGoods,
         goodsIn,
         commission)
     {
-
+        this.hasBought = true;
         this.fees = this.GlobalData.Fees;
         this.sellHighstScale = this.GlobalData.sellHighstScale;
-        this.id = id;
+
         this.buyTick = nowTick;
         this.commissionIn = commission;
         this.goodsIn = goodsIn;
@@ -31,7 +79,58 @@ class RobotNode  {
         this.calcuBuy(currencyPerGoods);
         this.createBuyDataBase();
     }
+    recieveSell(error, response){
 
+        if(error !== null){
+            console.log("statusCode",error.statusCode);
+
+            //服务器钱不够
+            if(error.statusCode === 400){
+
+            }
+            //本地模拟钱不够
+            if(error.statusCode === 0){
+
+            }
+            //速率超标
+            else if(error.statusCode === 429){
+                self.delayUpdate();
+            }
+        }
+
+        if(response.status !== undefined && response.status === 'FILLED'){
+
+            let value =response;
+            let qtys = 0;
+            let commissions = 0;
+            let count = 0;
+            for(let i = 0; i < value.fills.length; i++){
+                let price = parseFloat(value.fills[i].price);
+                let qty = parseFloat(value.fills[i].qty);
+                let commission =parseFloat( value.fills[i].commission);
+
+                count += price * qty;
+                qtys += qty;
+                commissions += commission;
+                this.GlobalData.simulation.sellChangeBalance(price,qty,commission);
+            }
+
+            this.sell(value.transactTime,count / qtys, commissions);
+
+            this.GlobalData.sellTradCount ++;
+        }else{
+            console.log("marketSell failed")
+        }
+    }
+    sell(nowTick, currencyPerGoodsOut, commissionOut){
+        this.sellTick = nowTick;
+        this.currencyPerGoodsOut = currencyPerGoodsOut;
+        this.currencyIn = this.currencyPerGoodsOut * this.goodsIn;
+        this.currencyEarn = this.currencyIn - this.currencyOut;
+        this.commissionOut = commissionOut;
+        this.GlobalData.earnSum += this.currencyEarn;
+        this.updateBuyDataBase();
+    }
 
     calcuBuy(currencyPerGoodsIn){
 
@@ -57,15 +156,7 @@ class RobotNode  {
         }
 
     }
-    sell(nowTick, currencyPerGoodsOut, commissionOut){
-        this.sellTick = nowTick;
-        this.currencyPerGoodsOut = currencyPerGoodsOut;
-        this.currencyIn = this.currencyPerGoodsOut * this.goodsIn;
-        this.currencyEarn = this.currencyIn - this.currencyOut;
-        this.commissionOut = commissionOut;
-        this.GlobalData.earnSum += this.currencyEarn;
-        this.updateBuyDataBase();
-    }
+
     //当前价格出售
     sellNow(currencyPerGoodsOut){
         let _in = currencyPerGoodsOut * this.goodsIn * (1-this.fees);
@@ -74,6 +165,9 @@ class RobotNode  {
     }
     update(nowTick,ask,bid){
 
+        if(this.hasBought === false){
+            return;
+        }
         //如果已经卖出
         if(this.sellDone > 0){
             return;
