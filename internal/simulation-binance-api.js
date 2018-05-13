@@ -153,7 +153,7 @@ class Simulation{
                     }
 
                     setTimeout(roll, 1000);
-                }
+                };
                 roll();
             }
 
