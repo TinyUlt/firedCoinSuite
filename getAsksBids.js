@@ -31,8 +31,6 @@ MongoClient.connect(FiredCoinInfo.MONGODB, function(err, db) {
     }else{
         depthCache();
     }
-
-
 });
 function depthCache() {
 

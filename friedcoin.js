@@ -1,22 +1,24 @@
 let MongoClient = require('mongodb').MongoClient;
 let assert = require('assert');
-let Environment = require("./Robot0/Environment");
-var SYMBOL = process.argv[2];
+let Environment = require("./internal/Robot/Environment");
+
+let FiredCoinInfo = process.env.FiredCoinInfoPath;
+FiredCoinInfo = JSON.parse(fs.readFileSync(FiredCoinInfo));
+console.log(FiredCoinInfo);
+
+var SYMBOL = FiredCoinInfo.SYMBOL;
 if(SYMBOL === undefined){
     console.log("SYMBOL undefined");
     process.exit();
-
 }
 // let RobotManager = require("./RobotManager.js");
-let Simulation = require('./simulation-binance-api.js');
+let Simulation = require('./internal//simulation-binance-api.js');
 // let simulation = null;
 let fs = require('fs');
 let config = JSON.parse(fs.readFileSync(`${SYMBOL}/config_operator.json`));
 console.log(config);
 //环境变量
-let MONGODB = process.env.MONGODB;
-let DATABASE_EX = process.env.DATABASE_EX;
-
+let MONGODB = FiredCoinInfo.MONGODB;
 
 //全局变量
 let GlobalData = {
@@ -280,7 +282,7 @@ function updateInfo(tick){
             maxPrice:GlobalData.maxPrice,
             // fallingRate:GlobalData.fallingRate,
             avgBuyEnable:GlobalData.avgBuyEnable,
-            serverId:DATABASE_EX,
+            serverId:FiredCoinInfo.server.name,
             // fallingPrice:managers[0].falling * GlobalData.fallingRate,
             startTime:GlobalData.startTime,
             updateTime:(new Date(tick)).toLocaleString(),
@@ -301,7 +303,7 @@ function updateInfo(tick){
 
 // let managers = [];
 //初始化数据库
-let dbName = config["dataBaseName"]+"_"+DATABASE_EX;
+let dbName = FiredCoinInfo.server.name;
 //初始化数据库，模拟器，机器人管理器
 MongoClient.connect(MONGODB, function(err, db) {
     assert.equal(null, err);
@@ -337,31 +339,6 @@ MongoClient.connect(MONGODB, function(err, db) {
         });
 
     });
-    // GlobalData.dbase.collection("info").rename("info_"+(new Date()).valueOf(), function(err, newColl) {
-    //     // console.log(err);
-    //     GlobalData.dbase.collection("robot").rename("robot_"+(new Date()).valueOf(), function(err, newColl) {
-    //         // console.log(err);
-    //         GlobalData.dbase.createCollection("robot", function(err, res) {
-    //             // if (err) throw err;
-    //             console.log("buy Collection created!");
-    //             GlobalData.dbase.collection("robot").ensureIndex({"buyTick":1,"sellTick":1}, function(err, res){
-    //                 // console.log(err);
-    //                 console.log("buy Collection ensureIndex!");
-    //
-    //                 if(GlobalData.FileConfigFirst === 1){
-    //                     setConfig();
-    //                 }
-    //                 getConfig();
-    //
-    //                 for(let i = 0; i < 200; i++){
-    //                     managers.push(new RobotManager(i,GlobalData));
-    //                 }
-    //                 GlobalData.simulation = new Simulation(GlobalData, recieveDepth);
-    //             })
-    //         });
-    //     });
-    // });
-
 });
 //websockt驱动的定时器
 function recieveDepth(tick, symbol, ask, bid){
@@ -370,87 +347,7 @@ function recieveDepth(tick, symbol, ask, bid){
     GlobalData.tradCount = 0;
     GlobalData.updateRobotCount = 0;
     GlobalData.environment.update(tick, ask, bid);
-    // if(GlobalData.isIn === 0){
-    //     if(GlobalData.readyIn === 0){
-    //         GlobalData.isIn = 1;
-    //     }else if(ask < GlobalData.readyIn ){
-    //         GlobalData.isIn = 1
-    //     }
-    // }else{
-    //     // for(let i = 0; i < GlobalData.Multiple; i++){
-    //     //
-    //     //     let manager = managers[i];
-    //     //
-    //     //     if(manager!==null){
-    //     //         if(GlobalData.tradCount < GlobalData.tradCountMax){
-    //     //             manager.update(tick, ask, bid);
-    //     //             GlobalData.updateRobotCount++;
-    //     //         }
-    //     //         GlobalData.nowPrice = bid;
-    //     //         GlobalData.robotCount += manager.nodeMap.size
-    //     //     }
-    //     // }
-    // }
-
 
     updateInfo(tick);
     getConfig();
-
-    //addDepthToDatabase(tick, ask, bid);
-    // updateAvgMinMaxPrice();
-    // console.log(tick.toLocaleString());
 }
-//得到历史平均值，最大最小值
-// function updateAvgMinMaxPrice(){
-//     GlobalData.dbchart.collection("lastAvg").find({_id:GlobalData.avgDuration}).toArray(function(err, res) {
-//             if(res.length > 0){
-//                 //console.log(res);
-//                 GlobalData.maxPrice = res[0].max;
-//                 GlobalData.minPrice = res[0].min;
-//                 GlobalData.avgPrice = res[0].ask;
-//             }
-//
-//         });
-// }
-
-//
-// let depths={
-//     count:[0,0,0,0,0,0,0,0],
-//     prvtick:[0,0,0,0,0,0,0,0],
-//     ticksName:["t_1s","t_30s","t_1m","t_5m","t_10m","t_1h","t_12h","t_1d"],
-//     ticks:[0,1000*30, 1000*60, 1000*60*5, 1000*60*10, 1000*60*60, 1000*60*60*12, 1000*60*60*24],
-//     askAmount:[0,0,0,0,0,0,0,0],
-//     bidAmount:[0,0,0,0,0,0,0,0],
-// };
-//
-// function addDepthToDatabase(tick,  ask, bid){
-//
-//     for(let i = 0; i < depths.ticks.length; i++){
-//         depths.askAmount[i]+=ask;
-//         depths.bidAmount[i]+=bid;
-//         depths.count[i]+=1;
-//
-//         if(tick - depths.prvtick[i] >= depths.ticks[i]){
-//
-//             let aveAsk = depths.askAmount[i] / depths.count[i];
-//             let aveBid = depths.bidAmount[i] / depths.count[i];
-//
-//             let setData = {ask:aveAsk, bid:aveBid};
-//             let where = {_id:tick};
-//             let updateStr = {$set: setData};
-//             let collectionName = depths.ticksName[i];
-//             GlobalData.dbase.collection(collectionName).update(where,updateStr,{upsert:true}, function(err) {
-//                 if (err) throw err;
-//                 // console.log(collectionName+" :" +"ask :"+aveAsk+" bid:"+aveBid+" inset done");
-//             });
-//
-//             depths.askAmount[i] = 0;
-//             depths.bidAmount[i] = 0;
-//             depths.count[i] = 0;
-//             depths.prvtick[i] = tick;
-//         }
-//     }
-// }
-
-
-
