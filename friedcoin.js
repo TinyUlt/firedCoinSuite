@@ -307,7 +307,8 @@ function updateInfo(tick){
 
 // let managers = [];
 //初始化数据库
-let dbName = FiredCoinInfo.server.name;
+let dbName = serverInfo.name;
+
 //初始化数据库，模拟器，机器人管理器
 MongoClient.connect(MONGODB, function(err, db) {
     assert.equal(null, err);
