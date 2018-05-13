@@ -3,29 +3,17 @@ var assert = require('assert');
 const nodemailer = require('./mailer');
 const binance = require('./node-binance-api.js');
 let fs = require('fs');
-var SYMBOL = process.argv[2];
-let config = JSON.parse(fs.readFileSync(`../${SYMBOL}/config_simulation.json`));
-let DATABASE_EX = process.env.DATABASE_EX;
-// let MONGODB = process.env.MONGODB;
-let APIKEY = process.env.APIKEY;
-let APISECRET = process.env.APISECRET;
-binance.options({
-    'APIKEY':APIKEY,
-    'APISECRET':APISECRET
-});
-// let dbase = null;
-//获取深度最新价格
-// if(config.useRealData === 0){
-//     MongoClient.connect(MONGODB, function(err, db) {
-//         assert.equal(null, err);
-//         console.log('Connected correctly to server.');
-//         dbase = db.db(config.dataBaseName);
-//     });
-// }
+
 class Simulation{
     constructor(GlobalData, callback) {
 
         this.GlobalData = GlobalData;
+
+        binance.options({
+            'APIKEY':GlobalData.serverInfo.APIKEY,
+            'APISECRET':GlobalData.serverInfo.APISECRET
+        });
+
         this.currency = this.GlobalData.currency;
         this.goods = this.GlobalData.goods;
         this.commission = this.GlobalData.commission;
@@ -59,20 +47,8 @@ class Simulation{
         this.currencyDfIndex = 0;
         this.simulTick = null;
 
-        // let monthNames = [
-        //     "January", "February", "March",
-        //     "April", "May", "June", "July",
-        //     "August", "September", "October",
-        //     "November", "December"
-        // ];
-        //let now = (new Date()).valueOf();
-       // let now2 = Date.parse('07 May 2018 14:31:00 GMT');
-
-        //美国时间比中国晚8小时
-        // this.startTime =Date.parse('2018-05-07T06:00:00.118Z');
-        // this.startTime = Date.parse('2018-5-10 00:30:00');
-        if(config.startTime !== null){
-            this.startTime = Date.parse(config.startTime);
+        if(this.GlobalData.simulationConfig.startTime !== null){
+            this.startTime = Date.parse(this.GlobalData.simulationConfig.startTime);
         }else{
             this.startTime = (new Date()).valueOf() - 1000;
         }
@@ -82,7 +58,7 @@ class Simulation{
         let self = this;
 
 
-        if(config.useRealBalance === 1){
+        if(this.GlobalData.simulationConfig.useRealBalance === 1){
             binance.balance(function(error, balances) {
 
                 if(error === null){
@@ -92,14 +68,14 @@ class Simulation{
                 }
             });
         }else{
-            self.init(config.balances);
+            self.init(this.GlobalData.simulationConfig.balances);
             self.depthCache(self.GlobalData.symbol, callback);
         }
 
     }
     updateAvgMinMaxPrice(){
         let self = this;
-        if(config.useRealData === 1){
+        if(this.GlobalData.simulationConfig.useRealData === 1){
             self.GlobalData.dbchart.collection("lastAvg").find({_id:self.GlobalData.avgDuration}).toArray(function(err, res) {
                 if(res.length > 0){
                     //console.log(res);
@@ -136,13 +112,11 @@ class Simulation{
             // });
         }
     }
-    // function detectWebsockets(){
-    //     setTimeout(roll, 1000/config.getDataSpeed);
-    // }
+
     depthCache( symbol, callback){
         let self = this;
         let roll = null;
-        if(config.useRealData === 1){
+        if(this.GlobalData.simulationConfig.useRealData === 1){
 
             roll = function(){
                 if (self.GlobalData.delayUpdate === false ){
@@ -169,29 +143,6 @@ class Simulation{
 
                 setTimeout(roll, 1000);
             }
-
-
-            // console.log(requestName);
-            // binance.websockets.depthCache([requestName],function(symbol, depth){
-            //
-            //      // console.log("a");
-            //     console.log((new Date()).toLocaleTimeString());
-            //     let nowTick = (new Date()).valueOf();
-            //
-            //     let max = 1; // Show 10 closest orders only
-            //     let bids = binance.sortBids(depth.bids, max);
-            //     let asks = binance.sortAsks(depth.asks, max);
-            //
-            //
-            //     let bid =parseFloat(binance.first(bids)) ;
-            //     let ask = parseFloat(binance.first(asks)) ;
-            //     self.simulTick = nowTick;
-            //
-            //     self.update(requestName,ask, bid  );
-            //     callback(nowTick, symbol, ask, bid);
-            //     self.updateAvgMinMaxPrice();
-            // },10);
-
         }else{
             roll = function(){
                 if(self.GlobalData.dbchart !== null){
@@ -209,15 +160,13 @@ class Simulation{
                             self.updateAvgMinMaxPrice();
                             self.startTime+=1000;
                         }else{
-                            config.getDataSpeed = 2;
+                            self.GlobalData.simulationConfig.getDataSpeed = 2;
                         }
 
-                        setTimeout(roll, 1000/config.getDataSpeed);
+                        setTimeout(roll, 1000/self.GlobalData.simulationConfig.getDataSpeed);
                     });
                 }
             };
-
-
         }
         roll();
     }
@@ -225,8 +174,8 @@ class Simulation{
     init(balances){
 
 
-        this.Price[this.commission+this.currency].ask=config[this.commission+this.currency];
-        this.Price[this.commission+this.goods].ask=config[this.commission+this.goods];
+        this.Price[this.commission+this.currency].ask=this.GlobalData.simulationConfig[this.commission+this.currency];
+        this.Price[this.commission+this.goods].ask=this.GlobalData.simulationConfig[this.commission+this.goods];
 
         if(balances!==null){
             if ( typeof balances[this.goods] !== undefined ) {
@@ -244,11 +193,7 @@ class Simulation{
                 this.OriginBalance[this.commission].available = parseFloat(balances[this.commission].available);
                 this.RealBalance[this.commission].available = parseFloat(balances[this.commission].available);
             }
-
-
         }
-
-
     }
 
     update(symbol, cA, cB){
@@ -256,29 +201,11 @@ class Simulation{
         this.Price[symbol].ask = cA;
         this.Price[symbol].bid = cB;
 
-        // let maxAvgDf = this.GlobalData.maxPrice - this.GlobalData.avgPrice;
-        // let avgMinDf = this.GlobalData.avgPrice - this.GlobalData.minPrice;
-        //
-        // let df = Math.max(maxAvgDf, avgMinDf);
-        //
-        // let maxMinDf = df * 2;
-        // let askMinDf = cA - (this.GlobalData.avgPrice - df);
-        // if(askMinDf < 0){
-        //     askMinDf = 0;
-        // }
-        // if(maxMinDf !== 0){
-        //     this.GlobalData.fallingRate = askMinDf * 2 / maxMinDf;
-        //
-        //     if(this.GlobalData.fallingRate < 0.1){
-        //         this.GlobalData.fallingRate = 0.1;
-        //     }
-        // }
         if(cA > this.GlobalData.avgPrice){
             this.GlobalData.avgBuyEnable = 0;
         }else{
             this.GlobalData.avgBuyEnable = 1;
         }
-
 
         let fees = cA * this.GlobalData.Fees;
         this.GlobalData.buyFalling = fees * this.GlobalData.buyFallingOfFees;
@@ -292,7 +219,7 @@ class Simulation{
         let startAsk = cA;
 
         let self = this;
-        if(config.useRealData){
+        if(this.GlobalData.simulationConfig.useRealData){
             binance.prices(function(error, ticker) {
 
                 if(error===null){
@@ -304,9 +231,7 @@ class Simulation{
                         self.OriginBalance[self.symbol].available = startAsk;
                         self.OriginBalance.PreProperty.available = self.convertToCurrency(self.OriginBalance[self.currency].available, self.OriginBalance[self.goods].available, self.OriginBalance[self.commission].available);
                     }
-
                 }
-
             });
         }else{
             if(self.OriginBalance.PreProperty.available === 0){
@@ -323,7 +248,7 @@ class Simulation{
 
         let self = this;
         if ( callback ){
-            if(config.useRealBalance === 1){
+            if(self.GlobalData.simulationConfig.useRealBalance === 1){
                 binance.balance(function(error, balances) {
 
                     if(error === null){
@@ -378,7 +303,7 @@ class Simulation{
         if(index !== this.currencyDfIndex){
             this.currencyDfIndex = index;
             // nodemailer.sendEMail(this.GlobalData.emailList, `${this.goods}Df:${this.RealBalance[this.goods].df.toFixed(6)},${this.currency}Df:${this.RealBalance[this.currency].df.toFixed(4)},${this.commission}Df:${this.RealBalance[this.commission].df.toFixed(5)},ProDf:${this.RealBalance.Property.df.toFixed(4)}`,"text");
-            nodemailer.sendEMail(this.GlobalData.emailList, `${DATABASE_EX}-${this.currency}_balance:${this.RealBalance[this.currency].available.toFixed(4)}-${this.currency}_df:${this.RealBalance[this.currency].df.toFixed(4)}-${this.GlobalData.symbol}_price:${this.GlobalData.nowPrice}`,"text");
+            nodemailer.sendEMail(this.GlobalData.emailList, `${this.GlobalData.serverInfo.name}-${this.currency}_balance:${this.RealBalance[this.currency].available.toFixed(4)}-${this.currency}_df:${this.RealBalance[this.currency].df.toFixed(4)}-${this.GlobalData.symbol}_price:${this.GlobalData.nowPrice}`,"text");
         }
         if(this.SimulBalance[this.currency].df < this.GlobalData.useCurrencyHighst){
             this.GlobalData.useCurrencyHighst = this.SimulBalance[this.currency].df;
@@ -395,7 +320,7 @@ class Simulation{
         let ret = this.checkMarketBuyEnough(symbol, quantity);
 
         if(ret.success === 1) {
-            if(config.useRealOder === 1){
+            if(this.GlobalData.simulationConfig.useRealOder === 1){
                 binance.marketBuy(symbol, quantity, flags, callback);
             }else{
                 this.simulMarketBuy(ret.commissionNeed, symbol, quantity, flags, callback);
@@ -409,7 +334,7 @@ class Simulation{
         let ret = this.checkMarketBuyEnough(symbol, quantity);
 
         if(ret.success === 1){
-            if(config.useRealOder === 1){
+            if(this.GlobalData.simulationConfig.useRealOder === 1){
                 binance.marketSell(symbol, quantity, flags, callback);
             }else{
                 this.simulMarketSell(ret.commissionNeed, symbol, quantity, flags, callback);

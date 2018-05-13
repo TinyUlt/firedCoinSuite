@@ -17,10 +17,11 @@ let Simulation = require('./internal//simulation-binance-api.js');
 // let simulation = null;
 
 let config = JSON.parse(fs.readFileSync(`${SYMBOL}/config_operator.json`));
+let simulationConfig = JSON.parse(fs.readFileSync(`${SYMBOL}/config_simulation.json`));
 console.log(config);
 //环境变量
 let MONGODB = FiredCoinInfo.MONGODB;
-
+let serverInfo = FiredCoinInfo.server[0];
 //全局变量
 let GlobalData = {
     FileConfigFirst:            config.FileConfigFirst,
@@ -81,7 +82,9 @@ let GlobalData = {
     useCurrencyHighst:0,
     avePrice:0,
     delayUpdate:false,
-    startTime:(new Date()).toLocaleString()
+    startTime:(new Date()).toLocaleString(),
+    simulationConfig:simulationConfig,
+    serverInfo:serverInfo
 
 };
 let controll = null;
