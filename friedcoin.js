@@ -15,7 +15,7 @@ if(SYMBOL === undefined){
 // let RobotManager = require("./RobotManager.js");
 let Simulation = require('./internal//simulation-binance-api.js');
 // let simulation = null;
-let fs = require('fs');
+
 let config = JSON.parse(fs.readFileSync(`${SYMBOL}/config_operator.json`));
 console.log(config);
 //环境变量
