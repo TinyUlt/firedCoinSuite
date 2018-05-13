@@ -255,10 +255,10 @@ class Simulation{
         let self = this;
         if ( callback ){
             if(self.GlobalData.simulationConfig.useRealBalance === 1){
-                // self.binance.balance(function(error, balances) {
+                self.binance.balance(function(error, balances) {
 
                     if(error === null){
-                        console.log(self.GlobalData.serverInfo.name,balances[self.goods].available);
+                        // console.log(self.GlobalData.serverInfo.name,balances[self.goods].available);
 
                         if ( typeof balances[self.goods] !== undefined ) {
                             self.RealBalance[self.goods].available = parseFloat(balances[self.goods].available);
