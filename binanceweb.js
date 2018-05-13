@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 let firedCoinInfo = JSON.parse(fs.readFileSync(process.env.FiredCoinInfoPath));
 
 // let DATABASE_EX = process.env.DATABASE_EX;
-let WEBPORT =firedCoinInfo.SYMBOL ;
+let WEBPORT =firedCoinInfo.WEBPORT ;
 // 创建 application/x-www-form-urlencoded 编码解析
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var SYMBOL = firedCoinInfo.SYMBOL;
