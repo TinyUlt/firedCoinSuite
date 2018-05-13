@@ -1,0 +1,25 @@
+
+{
+  "Comment":{
+    "dataBaseName":"数据库名",
+    "currencyPerBNB":"获取一个bnb需要花费的流通货币",
+    "googsPerBNB":"获取一个bnb需要花费的物品",
+    "useRealData":"使用实时数据",
+    "useRealBalance":"使用真实资产",
+    "useRealOder":"使用真实订单",
+    "getDataSpeed":"运行速率"
+  },
+  "getDataSpeed":1000,
+  "startTime":"2018-5-10 13:45:00",
+  "useRealData":0,
+  "useRealBalance":0,
+  "useRealOder":0,
+
+  "balances":{
+    "BTC": {"available": 0},
+    "USDT":{"available": 3000},
+    "BNB": {"available": 0.5}
+  },
+  "BNBUSDT":14,
+  "BNBBTC":0.0015
+}

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="text/javascript" src="js/loader.js"></script>
+<script  type="text/javascript" src="js/jquery.min.js"></script>
+
+<!--<form action="http://127.0.0.1:8081/process_get" method="GET">-->
+    <!--First Name: <input type="text" name="first_name">  <br>-->
+
+    <!--Last Name: <input type="text" name="last_name">-->
+    <!--<input type="submit" value="Submit">-->
+<!--</form>-->
+<!--<form action="http://127.0.0.1:8081/process_post" method="POST">-->
+    <!--First Name: <input type="text" name="first_name">  <br>-->
+
+    <!--Last Name: <input type="text" name="last_name">-->
+    <!--<input type="submit" value="Submit">-->
+
+<script type="text/javascript">
+
+
+    let timeType = "_1m";
+    let timeTypeTicks = {
+        "_1s":1000,
+        "_30s":1000 * 30,
+        "_1m":1000 * 60,
+        "_5m":1000 * 60 * 5,
+        "_10m":1000 * 60 * 10,
+        "_1h":1000 * 60 * 60,
+        "_12h":1000 * 60 * 60 * 12,
+        "_1d":1000 * 60 * 60 * 24,
+    };
+
+    function update(){
+        let startTime =parseInt((new Date(document.getElementById("DateStart").value)).valueOf()) ;
+        let endTime = parseInt((new Date(document.getElementById("DateEnd").value)).valueOf());
+        let bid_enable = document.getElementById("bid_checkbox").checked?1:0;
+        let max_enable = document.getElementById("max_checkbox").checked?1:0;
+        let min_enable = document.getElementById("min_checkbox").checked?1:0;
+        let avg1h_enable = document.getElementById("avg1h_checkbox").checked?1:0;
+        let managerId = document.getElementById("managerId_input").value;
+        let serverId = document.getElementById("serverId_input").value;
+        let charts=["chart_0","chart_1","chart_2","chart_3"];
+        let chartIndex = 0;
+
+        for(let i = 0; i < charts.length; i++){
+            document.getElementById(charts[i]).hidden = true;
+        }
+
+        let askbidData = null;
+        let avgData = null;
+        let avgD12hata = null;
+        let robotBuyData = null;
+        let robotSellData = null;
+        let robotInfo = null;
+        function checkDone(){
+            if(askbidData !== null&& avgData !== null && robotBuyData !== null &&robotSellData !== null && robotInfo!==null && avgD12hata !== null){
+
+                let chartData = askbidData;
+
+                google.charts.load('current', {'packages':['line', 'corechart']});
+                google.charts.setOnLoadCallback(drawbtcChart);
+
+                function drawbtcChart(){
+                    drawChart(charts[chartIndex],1500, 800);
+                    chartIndex++;
+                }
+
+                function drawChart( elementId,chartWidth, chartHight) {
+
+                    let chartDiv = document.getElementById(elementId);
+                    chartDiv.hidden = false;
+                    let data = new google.visualization.DataTable();
+                    data.addColumn('datetime', 'Time');
+
+                    let temp = {};
+//                    for(let i = 0; i < coinList.length; i++){
+//                        data.addColumn('number', coinList[i]);
+//                    }
+                    data.addColumn('number', "ask");
+                    data.addColumn('number', "bid");
+                    data.addColumn('number', "buy");
+                    data.addColumn({type: 'string', role: 'tooltip'});
+                    data.addColumn('number', "sell");
+                    data.addColumn({type: 'string', role: 'tooltip'});
+                    data.addColumn('number', "sell");
+                    data.addColumn('number', "avg1h");
+                    data.addColumn('number', "max");
+                    data.addColumn('number', "min");
+
+                    let mydata=[];
+
+
+                    let askbidIndex = 0;
+                    let buyIndex = 0;
+                    let sellIndex = 0;
+                    let avgIndex = 0;
+                    let avg12hIndex = 0;
+
+                    let tickStart = chartData[0]._id;
+                    let tickEnd =Math.min(robotInfo.updateTick,chartData[chartData.length-1]._id) ;
+//                    let tickEnd = chartData[chartData.length-1]._id;
+
+                    console.log(tickStart);
+                    console.log(tickEnd);
+
+                    let tempask = null;
+                    let tempbid = null;
+                    for(let tick = tickStart,  i = 0; tick < tickEnd;tick += timeTypeTicks[timeType], i++){
+
+                        mydata[i] = [];
+
+                        mydata[i][0]= new Date(tick);
+                        mydata[i][1] = null;
+                        mydata[i][2] = null;
+                        mydata[i][3] = null;
+                        mydata[i][4] = null;
+                        mydata[i][5] = null;
+                        mydata[i][6] = null;
+                        mydata[i][7] = null;
+                        mydata[i][8] = null;
+                        mydata[i][9] = null;
+                        mydata[i][10] = null;
+//                        mydata[i][4] = null;
+
+                        if(askbidIndex < chartData.length && chartData[askbidIndex]._id - timeTypeTicks[timeType] <= tick){
+                            mydata[i][1] = chartData[askbidIndex].ask;
+                            if(bid_enable)mydata[i][2] = chartData[askbidIndex].bid;
+
+                            tempask = mydata[i][1];
+
+                            if(bid_enable)tempbid = mydata[i][2];
+                            askbidIndex++;
+                        }else{
+                            if(tempask!==null){
+                                mydata[i][1] = tempask;
+                                if(bid_enable)mydata[i][2] = tempbid;
+                            }
+                        }
+
+                        if(avgIndex < avgData.length && avgData[avgIndex]._id < tick){
+                            if(avg1h_enable)mydata[i][8] = avgData[avgIndex].ask;
+                            avgIndex++;
+                        }
+                        if(avg12hIndex < avgD12hata.length && avgD12hata[avg12hIndex]._id < tick){
+                            if(max_enable)mydata[i][9] = avgD12hata[avg12hIndex].max;
+                            if(min_enable)mydata[i][10] = avgD12hata[avg12hIndex].min;
+                            avg12hIndex++;
+                        }
+                        if(buyIndex < robotBuyData.length && robotBuyData[buyIndex].buyTick <= tick){
+                            mydata[i][3] = robotBuyData[buyIndex].currencyPerGoodsIn;
+                            mydata[i][4] = `ID:${robotBuyData[buyIndex].nodeId}
+                                            fallRateByMaxMin:${robotBuyData[buyIndex].fallRateByMaxMin}
+                                            真实买入价:${robotBuyData[buyIndex].currencyPerGoodsInReal}
+                                            买入价:${robotBuyData[buyIndex].currencyPerGoodsIn}
+                                            成本价:${robotBuyData[buyIndex].currencyPerGoodsCost}
+                                            最高价:${robotBuyData[buyIndex].highst}
+                                            准卖价:${robotBuyData[buyIndex].currencyPerGoodsPreSale}
+                                            是否达到高度:${robotBuyData[buyIndex].isOverLimit}
+                                            `;
+                            mydata[i][7] = robotBuyData[buyIndex].currencyPerGoodsOut;
+                            buyIndex++;
+                        }// 是否达到高度:${robotBuyData[sellIndex].isOverLimit}
+                        if(sellIndex < robotSellData.length && robotSellData[sellIndex].sellTick <= tick){
+                            mydata[i][5] = robotSellData[sellIndex].currencyPerGoodsOut;
+                            mydata[i][6] = `ID:${robotSellData[sellIndex].nodeId}
+                                            买入价:${robotSellData[sellIndex].currencyPerGoodsIn}
+                                            卖出价:${robotSellData[sellIndex].currencyPerGoodsOut}
+                                            发送价:${robotSellData[sellIndex].currencyPerGoodsSend}
+                                            成本价:${robotSellData[sellIndex].currencyPerGoodsCost}
+                                            准卖价:${robotSellData[sellIndex].currencyPerGoodsPreSale}
+                                            最高价:${robotSellData[sellIndex].highst}
+                                            买入量(BTC):${robotSellData[sellIndex].goodsIn}
+                                            买入手续费(BNB):${robotSellData[sellIndex].commissionIn}
+                                            卖出手续费(BNB):${robotSellData[sellIndex].commissionOut}
+                                            买入花费金额(USDT):${robotSellData[sellIndex].currencyOut}
+                                            卖出获得金额(USDT):${robotSellData[sellIndex].currencyIn}
+                                            `;
+                            sellIndex++;
+                        }
+                    }
+
+
+                    data.addRows(mydata);
+
+                    //let during = (chartData[chartData.length-1]._id - chartData[0]._id)/1000.0/60.0/60.0;
+
+                    let title = `本金(USDT):${robotInfo.useCurrencyHighst}
+                                 取得(BTC):${robotInfo.simulDf.BTC}
+                                 支出(USDT):${robotInfo.simulDf.USDT}
+                                 手续费(BNB):${robotInfo.simulDf.BNB}
+                                 总盈利(USDT):${robotInfo.simulDf.Property}
+                                 `;
+
+                    let series = {};
+                    let vaxes = {};
+
+                    for(let i = 0; i < 11; i ++){
+                        series[i] = {targetAxisIndex: 0};
+                        vaxes[i] = {title: "btc"};
+                    }
+                    series[0].lineWidth = 1;
+                    series[1].lineWidth = 1;
+                    series[2].lineWidth = 3;
+                    series[3].lineWidth = 3;
+                    series[4].lineWidth = 3;
+                    series[5].lineWidth = 1;
+                    series[6].lineWidth = 1;
+                    series[7].lineWidth = 1;
+
+
+                    let classicOptions = {
+                        title: title,
+                        width: chartWidth,
+                        height: chartHight,
+
+                        series:series,
+                        vAxes: vaxes,
+                        colors: ['#000000','#e7b203', '#2ae747', '#d30003', '#000000',  '#1222e7',  '#e776be', '#b08ce7']
+                    };
+
+                    function drawClassicChart() {
+                        let classicChart = new google.visualization.LineChart(chartDiv);
+                        classicChart.draw(data, classicOptions);
+                    }
+
+                    drawClassicChart();
+                }
+            }
+        }
+        let _get = `/d_a?startTime=${startTime}&endTime=${endTime}&symbol=t${timeType}`;
+        console.log(_get);
+        $.post(_get,function(cd,status){
+//            console.log(cd);
+            askbidData =JSON.parse(cd);
+            checkDone();
+        });
+
+        _get = `/d_d?startTime=${startTime}&endTime=${endTime}&symbol=avg_1h`;
+        console.log(_get);
+        $.post(_get,function(cd,status){
+//            console.log(cd);
+            avgData =JSON.parse(cd);
+            checkDone();
+        });
+        _get = `/d_d?startTime=${startTime}&endTime=${endTime}&symbol=avg_1d`;
+        console.log(_get);
+        $.post(_get,function(cd,status){
+//            console.log(cd);
+            avgD12hata =JSON.parse(cd);
+            checkDone();
+        });
+
+
+        _get = `/d_b?startTime=${startTime}&endTime=${endTime}&symbol=buySell&where=buyTick&serverId=${serverId}&managerId=${managerId}`;
+        console.log(_get);
+        $.post(_get,function(cd,status){
+//            console.log(cd);
+            robotBuyData =JSON.parse(cd);
+            checkDone();
+        });
+        _get = `/d_b?startTime=${startTime}&endTime=${endTime}&symbol=buySell&where=sellTick&serverId=${serverId}&managerId=${managerId}`;
+//        console.log(_get);
+        $.post(_get,function(cd,status){
+//            console.log(cd);
+            robotSellData =JSON.parse(cd);
+            checkDone();
+        });
+
+        _get = `/d_c?&serverId=${serverId}`;
+        console.log(_get);
+        $.post(_get,function(cd,status){
+//            console.log(cd);
+            robotInfo =JSON.parse(cd);
+            checkDone();
+        });
+
+
+    }
+    function js_yyyy_mm_dd_hh_mm_ss (date) {
+        let now = date;
+        let year = "" + now.getFullYear();
+        let month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+        let day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+        let hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+        let minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+        let second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+        return year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second;
+    }
+    $(document).ready(function(){
+
+//       let nowdate =Date.parse('2018-5-10 13:45:00') ;
+        let nowdate =(new Date()).valueOf();
+        nextdate = new Date(nowdate + 1000*60*60*24) ;
+        document.getElementById("DateEnd").value = js_yyyy_mm_dd_hh_mm_ss(nextdate);
+//        predate =new Date(1523497756956 - 10) ;
+        predate =new Date(nowdate - 1000*60*30);
+        document.getElementById("DateStart").value = js_yyyy_mm_dd_hh_mm_ss(predate);
+
+        document.getElementById('_1s').onclick = function () {timeType = "_1s"; update();};
+        document.getElementById('_30s').onclick = function () {timeType = "_30s"; update();};
+        document.getElementById('_1m').onclick = function () {timeType = "_1m"; update();};
+        document.getElementById('_5m').onclick = function () {timeType = "_5m"; update();};
+        document.getElementById('_10m').onclick = function () {timeType = "_10m"; update();};
+        document.getElementById('_1h').onclick = function () {timeType = "_1h"; update();};
+        document.getElementById('_12h').onclick = function () {timeType = "_12h"; update();};
+        document.getElementById('_1d').onclick = function () {timeType = "_1d"; update();};
+
+        document.getElementById("bid_checkbox").checked = false;
+        document.getElementById("avg1h_checkbox").checked = false;
+        document.getElementById("max_checkbox").checked = false;
+        document.getElementById("min_checkbox").checked = false;
+        document.getElementById("serverId_input").value = "r1";
+        document.getElementById("managerId_input").value = 0;
+//        document.getElementById("btcamout_checkbox").checked = false;
+//        document.getElementById("usdt_checkbox").checked = true;
+//        document.getElementById("usdtdepth_checkbox").checked = true;
+        update();
+    });
+
+</script>
+<!--</form>-->
+<input type="datetime-local" value="2018-04-24T13:59:59" id = "DateStart"/>
+<input type="datetime-local" value="2015-09-24T13:59:59" id = "DateEnd"/>
+
+
+<button id="_1s">_1s</button>
+<button id="_30s">_30s</button>
+<button id="_1m">_1m</button>
+<button id="_5m">_5m</button>
+<button id="_10m">_10m</button>
+<button id="_1h">_1h</button>
+<button id="_12h">_12h</button>
+<button id="_1d">_1d</button>
+
+<input type="checkbox" id="bid_checkbox"  > bid</input>
+<input type="checkbox" id="avg1h_checkbox"  > avg1h</input>
+<input type="checkbox" id="max_checkbox"  > max</input>
+<input type="checkbox" id="min_checkbox"  > min</input>
+<input type="input" id="serverId_input"  > robotId</input>
+<input type="input" id="managerId_input"  > managerId</input>
+
+<!--<input type="checkbox" id="btcamout_checkbox" > btcamout</input>-->
+<!--<input type="checkbox" id="usdt_checkbox" > usdt</input>-->
+<!--<input type="checkbox" id="usdtdepth_checkbox" > usdtdepth</input>-->
+
+
+<div id="chart_0" style="width: 1500px; height: 800px"></div>
+<div id="chart_1" style="width: 1500px; height: 800px "></div>
+<div id="chart_2" style="width: 1500px; height: 800px "></div>
+<div id="chart_3" style="width: 1500px; height: 800px "></div>
+</body>
+</html>
