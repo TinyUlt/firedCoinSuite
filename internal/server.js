@@ -72,7 +72,7 @@ class FServer{
             delayUpdate:false,
             startTime:(new Date()).toLocaleString(),
             simulationConfig:simulationConfig,
-
+            serverInfo:serverInfo,
             controll : null,
             run:false,
 
