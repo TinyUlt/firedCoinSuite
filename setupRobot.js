@@ -22,7 +22,7 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
     let operatorConfig = JSON.parse(fs.readFileSync(`${firedCoinInfo.SYMBOL}/config_operator.json`));
     let simulationConfig = JSON.parse(fs.readFileSync(`${firedCoinInfo.SYMBOL}/config_simulation.json`));
 
-    let managerInfo = {};
+
     let managerConfig={};
     for(let i = 0; i < firedCoinInfo.server.length; i ++){
         managerConfig[firedCoinInfo.server[i].name] = {};
@@ -40,6 +40,7 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
     }
 
     function updateInfo() {
+        let managerInfo = null;
         for(let i = 0; i < firedCoinInfo.server.length; i ++){
             let server = servers[i];
             if(server.infoData !== null){
@@ -55,24 +56,26 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
             }
 
         }
+        if(managerInfo !== null){
+            let where = {_id:0};
+            let updateStr = {$set: managerInfo};
 
-        let where = {_id:0};
-        let updateStr = {$set: managerInfo};
+            dbServersManager.collection("info").update(where,updateStr,{upsert:true}, function(err) {
+                if (err) throw err;
+            });
+        }
 
 
-        dbServersManager.collection("info").update(where,updateStr,{upsert:true}, function(err) {
-            if (err) throw err;
-        });
     }
-    function setConfig(){
-        let self = this;
-        let where = {_id:0};
-        let updateStr = {$set: managerConfig};
-
-        self.GlobalData.dbase.collection("config").update(where,updateStr,{upsert:true}, function(err) {
-            if (err) throw err;
-        });
-    }
+    // function setConfig(){
+    //     let self = this;
+    //     let where = {_id:0};
+    //     let updateStr = {$set: managerConfig};
+    //
+    //     self.GlobalData.dbase.collection("config").update(where,updateStr,{upsert:true}, function(err) {
+    //         if (err) throw err;
+    //     });
+    // }
     function getConfig(){
 
         dbServersManager.collection("config"). find({_id:0}).toArray(function(err, result) { // 返回集合中所有数据

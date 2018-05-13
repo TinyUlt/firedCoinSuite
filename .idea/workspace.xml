@@ -40,8 +40,8 @@
       <file leaf-file-name="setupRobot.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/setupRobot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="32" column="13" lean-forward="false" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+            <state relative-caret-position="646">
+              <caret line="61" column="0" lean-forward="true" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -306,12 +306,12 @@
       <workItem from="1525967359029" duration="5000" />
       <workItem from="1525967410523" duration="21688000" />
       <workItem from="1526219564626" duration="247000" />
-      <workItem from="1526219856441" duration="6718000" />
+      <workItem from="1526219856441" duration="6933000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37896000" />
+    <option name="totallyTimeSpent" value="38111000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="173" y="23" width="1904" height="1337" extended-state="0" />
@@ -606,8 +606,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/setupRobot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="32" column="13" lean-forward="false" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        <state relative-caret-position="646">
+          <caret line="61" column="0" lean-forward="true" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
           <folding />
         </state>
       </provider>
