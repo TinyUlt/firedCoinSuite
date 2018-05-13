@@ -25,14 +25,14 @@ class RobotManager{
         this.nodeMap.set(id, node);
 
         this.GlobalData.tradCount++;
-        this.GlobalData.simulation.marketBuy(this.symbol,goodsIn,{type:'MARKET', newOrderRespType:"FULL"},node.recieveBuy);
+        this.GlobalData.simulation.marketBuy(this.symbol,goodsIn,{type:'MARKET', newOrderRespType:"FULL"},(error, response)=>{node.recieveBuy});
     }
     finishRobotNode(nowTick, node){
 
         let self = this;
         this.GlobalData.tradCount++;
 
-        this.GlobalData.simulation.marketSell(this.symbol, node.goodsIn,{type:'MARKET', newOrderRespType:"FULL"},node.recieveSell);
+        this.GlobalData.simulation.marketSell(this.symbol, node.goodsIn,{type:'MARKET', newOrderRespType:"FULL"},(error, response)=>{node.recieveSell});
     }
 
     updateFalling(){
