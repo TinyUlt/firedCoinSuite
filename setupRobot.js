@@ -30,6 +30,7 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
         let robotDatabase = db.db(firedCoinInfo.server[i].name);
         servers[i] = new FServer( firedCoinInfo.server[i],operatorConfig, simulationConfig,db, robotDatabase, dbchart);
     }
+    setConfig();
     update();
 
     function update(){
@@ -67,15 +68,15 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
 
 
     }
-    // function setConfig(){
-    //     let self = this;
-    //     let where = {_id:0};
-    //     let updateStr = {$set: managerConfig};
-    //
-    //     self.GlobalData.dbase.collection("config").update(where,updateStr,{upsert:true}, function(err) {
-    //         if (err) throw err;
-    //     });
-    // }
+    function setConfig(){
+        let self = this;
+        let where = {_id:0};
+        let updateStr = {$set: managerConfig};
+
+        self.GlobalData.dbase.collection("config").update(where,updateStr,{upsert:true}, function(err) {
+            if (err) throw err;
+        });
+    }
     function getConfig(){
 
         dbServersManager.collection("config"). find({_id:0}).toArray(function(err, result) { // 返回集合中所有数据
