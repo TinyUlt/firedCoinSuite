@@ -42,6 +42,7 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
 
     function update(){
 
+        getDepth();
         updateInfo();
         getConfig();
         setTimeout(update,1000);

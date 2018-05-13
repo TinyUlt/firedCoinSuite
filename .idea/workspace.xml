@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1373018a-7bcb-4c8f-8e4b-bc71ad83ce39" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/BTCUSDT/config_simulation.json" afterPath="$PROJECT_DIR$/BTCUSDT/config_simulation.json" />
-      <change beforePath="$PROJECT_DIR$/internal/simulation-binance-api.js" afterPath="$PROJECT_DIR$/internal/simulation-binance-api.js" />
       <change beforePath="$PROJECT_DIR$/setupRobot.js" afterPath="$PROJECT_DIR$/setupRobot.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -32,8 +29,8 @@
       <file leaf-file-name="setupRobot.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/setupRobot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="698">
-              <caret line="68" column="24" lean-forward="true" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
+            <state relative-caret-position="290">
+              <caret line="44" column="19" lean-forward="false" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -314,12 +311,12 @@
       <workItem from="1525967359029" duration="5000" />
       <workItem from="1525967410523" duration="21688000" />
       <workItem from="1526219564626" duration="247000" />
-      <workItem from="1526219856441" duration="13696000" />
+      <workItem from="1526219856441" duration="13743000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44874000" />
+    <option name="totallyTimeSpent" value="44921000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="621" y="23" width="1904" height="1337" extended-state="0" />
@@ -618,8 +615,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/setupRobot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="698">
-          <caret line="68" column="24" lean-forward="true" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
+        <state relative-caret-position="290">
+          <caret line="44" column="19" lean-forward="false" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="19" />
           <folding />
         </state>
       </provider>
