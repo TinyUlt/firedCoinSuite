@@ -48,6 +48,9 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
             if(server.infoData !== null){
                 managerInfo[server.infoData.serverId] = {
                     run:managerConfig[server.serverInfo.name].run,
+                    buyTradCount:server.infoData.buyTradCount,
+                    sellTradCount:server.infoData.sellTradCount,
+                    robotCount:server.infoData.robotCount,
                     leftUSDT:server.infoData.realBalance.USDT,
                     costUSDT:server.infoData.simulDf.USDT,
                     Property:server.infoData.simulDf.Property,
