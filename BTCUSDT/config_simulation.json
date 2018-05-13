@@ -9,9 +9,9 @@
     "useRealOder":"使用真实订单",
     "getDataSpeed":"运行速率"
   },
-  "getDataSpeed":1000,
-  "startTime":"2018-5-10 13:45:00",
-  "useRealData":1,
+  "getDataSpeed":1,
+  "startTime":null,
+  "useRealData":0,
   "useRealBalance":0,
   "useRealOder":0,
 
