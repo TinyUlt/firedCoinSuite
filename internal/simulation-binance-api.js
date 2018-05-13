@@ -85,7 +85,7 @@ class Simulation{
                     //console.log(res);
                     // self.GlobalData.maxPrice = res[0].max;
                     // self.GlobalData.minPrice = res[0].min;
-                    self.GlobalData.avgPrice = res[0].ask+100;
+                    self.GlobalData.avgPrice = res[0].ask;
                 }
             });
 

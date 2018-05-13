@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1373018a-7bcb-4c8f-8e4b-bc71ad83ce39" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/internal/simulation-binance-api.js" afterPath="$PROJECT_DIR$/internal/simulation-binance-api.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -59,8 +60,8 @@
       <file leaf-file-name="simulation-binance-api.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/internal/simulation-binance-api.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-62">
-              <caret line="216" column="4" lean-forward="false" selection-start-line="216" selection-start-column="4" selection-end-line="216" selection-end-column="4" />
+            <state relative-caret-position="256">
+              <caret line="87" column="57" lean-forward="true" selection-start-line="87" selection-start-column="57" selection-end-line="87" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -174,8 +175,8 @@
         <option value="$PROJECT_DIR$/binanceweb.js" />
         <option value="$PROJECT_DIR$/BTCUSDT/config_simulation.json" />
         <option value="$PROJECT_DIR$/setupRobot.js" />
-        <option value="$PROJECT_DIR$/internal/simulation-binance-api.js" />
         <option value="$PROJECT_DIR$/internal/Robot/RobotManager.js" />
+        <option value="$PROJECT_DIR$/internal/simulation-binance-api.js" />
       </list>
     </option>
   </component>
@@ -312,12 +313,12 @@
       <workItem from="1525967359029" duration="5000" />
       <workItem from="1525967410523" duration="21688000" />
       <workItem from="1526219564626" duration="247000" />
-      <workItem from="1526219856441" duration="14719000" />
+      <workItem from="1526219856441" duration="14980000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45897000" />
+    <option name="totallyTimeSpent" value="46158000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="621" y="23" width="1904" height="1337" extended-state="0" />
@@ -616,8 +617,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/internal/simulation-binance-api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-62">
-          <caret line="216" column="4" lean-forward="false" selection-start-line="216" selection-start-column="4" selection-end-line="216" selection-end-column="4" />
+        <state relative-caret-position="256">
+          <caret line="87" column="57" lean-forward="true" selection-start-line="87" selection-start-column="57" selection-end-line="87" selection-end-column="57" />
           <folding />
         </state>
       </provider>
