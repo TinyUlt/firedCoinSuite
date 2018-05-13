@@ -3,11 +3,14 @@ let path = require('path');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-let DATABASE_EX = process.env.DATABASE_EX;
-let WEBPORT = parseInt(process.env.WEBPORT) ;
+
+let firedCoinInfo = JSON.parse(fs.readFileSync(process.env.FiredCoinInfoPath));
+
+// let DATABASE_EX = process.env.DATABASE_EX;
+let WEBPORT =firedCoinInfo.SYMBOL ;
 // 创建 application/x-www-form-urlencoded 编码解析
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-var SYMBOL = process.argv[2];
+var SYMBOL = firedCoinInfo.SYMBOL;
 if(SYMBOL === undefined){
     console.log("SYMBOL undefined");
     process.exit();
@@ -53,11 +56,9 @@ const moment = require('moment');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 
-let MONGODB = process.env.MONGODB;
-// let MONGODB = 'mongodb://root:TinyUlt920805@ec2-18-144-10-136.us-west-1.compute.amazonaws.com:27017/local?authSource=admin';
-let dbaseName = SYMBOL + "_" +DATABASE_EX;
-// let dbaseName = SYMBOL + "_r1" ;
-var dbchartName = SYMBOL + "_Chart";
+let MONGODB = firedCoinInfo.MONGODB;
+
+var dbchartName = firedCoinInfo.requestAsksBids.name;
 let dbchart;
 let dbase = null;
 MongoClient.connect(MONGODB, function(err, db) {
