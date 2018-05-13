@@ -126,35 +126,35 @@ class Simulation{
     depthCache( symbol, callback){
         let self = this;
         let roll = null;
-        if(this.GlobalData.simulationConfig.useRealData === 1){
 
-            if(this.GlobalData.simulationConfig.useManagerAsksBids === 0){
-                roll = function(){
-                    if (self.GlobalData.run === true && self.GlobalData.delayUpdate === false ){
+        if(this.GlobalData.simulationConfig.useRealData === 1 && this.GlobalData.simulationConfig.useManagerAsksBids === 0){
+            roll = function(){
+                if (self.GlobalData.run === true && self.GlobalData.delayUpdate === false ){
 
-                        self.binance.depthRequest(symbol,function(error,json){
-                            process.stdout.write((new Date()).getSeconds()+' ');
-                            if (error === null){
-                                let nowTick = (new Date()).valueOf();
-                                self.simulTick = nowTick;
+                    self.binance.depthRequest(symbol,function(error,json){
+                        process.stdout.write((new Date()).getSeconds()+' ');
+                        if (error === null){
+                            let nowTick = (new Date()).valueOf();
+                            self.simulTick = nowTick;
 
-                                let ask =parseFloat(json.asks[0][0]);
-                                let bid =parseFloat(json.bids[0][0]);
-                                // console.log(ask, bid);
+                            let ask =parseFloat(json.asks[0][0]);
+                            let bid =parseFloat(json.bids[0][0]);
+                            // console.log(ask, bid);
 
-                                self.update(symbol,ask, bid);
-                                callback(nowTick, symbol, ask, bid);
-                                self.updateAvgMinMaxPrice();
-                            } else {
-                                console.log(error);
-                            }
+                            self.update(symbol,ask, bid);
+                            callback(nowTick, symbol, ask, bid);
+                            self.updateAvgMinMaxPrice();
+                        } else {
+                            console.log(error);
+                        }
 
-                        },5);
-                    }
-
-                    setTimeout(roll, 1000);
+                    },5);
                 }
-            }
+
+                setTimeout(roll, 1000);
+            };
+            roll();
+
 
         }else{
             roll = function(){
@@ -183,8 +183,9 @@ class Simulation{
                     setTimeout(roll, 1000);
                 }
             };
+            roll();
         }
-        roll();
+
     }
 
     init(balances){
