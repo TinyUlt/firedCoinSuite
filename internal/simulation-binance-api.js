@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 const nodemailer = require('./mailer');
-const binance = require('./node-binance-api.js');
+let binance = require('./node-binance-api.js');
 let fs = require('fs');
 
 class Simulation{
