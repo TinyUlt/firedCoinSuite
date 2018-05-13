@@ -1,12 +1,13 @@
 //机器人节点
 class RobotNode  {
 
-    constructor(GlobalData, managerId, id) {
+    constructor(GlobalData, managerId, id,currencyPerGoodsAsk) {
 
         this.managerId = managerId;
         this.GlobalData = GlobalData;
         this.id = id;
         this.hasBought = false;
+        this.currencyPerGoodsIn = currencyPerGoodsAsk;
     }
     changeBuy(currencyPerGoods){
 

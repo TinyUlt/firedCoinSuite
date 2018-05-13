@@ -16,23 +16,23 @@ class RobotManager{
         return ++this.robotId;
     }
 
-    createRobotNode(nowTick, goodsIn){
+    createRobotNode(nowTick, goodsIn, currencyPerGoodsAsk){
 
         let self = this;
 
         let id = this.getRobotId();
-        let node = new RobotNode(this.GlobalData,this.id, id);
+        let node = new RobotNode(this.GlobalData,this.id, id, currencyPerGoodsAsk);
         this.nodeMap.set(id, node);
 
         this.GlobalData.tradCount++;
-        this.GlobalData.simulation.marketBuy(this.symbol,goodsIn,{type:'MARKET', newOrderRespType:"FULL"},(error, response)=>{node.recieveBuy});
+        this.GlobalData.simulation.marketBuy(this.symbol,goodsIn,{type:'MARKET', newOrderRespType:"FULL"},(error, response)=>{node.recieveBuy(error, response)});
     }
     finishRobotNode(nowTick, node){
 
         let self = this;
         this.GlobalData.tradCount++;
 
-        this.GlobalData.simulation.marketSell(this.symbol, node.goodsIn,{type:'MARKET', newOrderRespType:"FULL"},(error, response)=>{node.recieveSell});
+        this.GlobalData.simulation.marketSell(this.symbol, node.goodsIn,{type:'MARKET', newOrderRespType:"FULL"},(error, response)=>{node.recieveSell(error, response)});
     }
 
     updateFalling(){
@@ -46,7 +46,7 @@ class RobotManager{
         if(this.nodeMap.size === 0 && this.GlobalData.avgBuyEnable === 1){
 
 
-            this.createRobotNode(nowTick, this.GlobalData.goodsAmountPerBuy);
+            this.createRobotNode(nowTick, this.GlobalData.goodsAmountPerBuy, currencyPerGoodsAsk);
             this.updateFalling();
         }
 
@@ -70,7 +70,7 @@ class RobotManager{
             && lowstPrice -  this.falling >= currencyPerGoodsAsk
             && this.GlobalData.avgBuyEnable === 1){
 
-            this.createRobotNode(nowTick, this.GlobalData.goodsAmountPerBuy);
+            this.createRobotNode(nowTick, this.GlobalData.goodsAmountPerBuy, currencyPerGoodsAsk);
 
             this.updateFalling();
         }
