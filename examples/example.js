@@ -23,9 +23,9 @@ binance.balance(function(error, balances) {
     //     console.log("BNB balance: ", balances.BNB.available);
     // }
 });
-// binance.sell("BTCUSDT", quantity, price, {stopPrice: stopPrice, type: type},function(error, response) {
-//     console.log("BTCUSDT()",error, response);
-// });
+binance.sell("BTCUSDT", quantity, price, {stopPrice: stopPrice, type: type},function(error, response) {
+    console.log("BTCUSDT()",error, response);
+});
 
 // Get bid/ask prices
 //binance.allBookTickers(function(error, json) {
