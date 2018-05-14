@@ -1,4 +1,5 @@
 const Binance = require('../internal/node-binance-api.js');
+let fs = require('fs');
 let binance = (new Binance()).core;
 
 let firedCoinInfo = JSON.parse(fs.readFileSync(process.env.FiredCoinInfoPath));
