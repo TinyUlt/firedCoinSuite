@@ -10,7 +10,7 @@ binance.options({
     'APISECRET':server.APISECRET
 });
 
-let type = "STOP_LOSS";
+let type = "STOP_LOSS_LIMIT";
 let quantity = 0.0015;
 let price = 8640;
 let stopPrice = 8639;
