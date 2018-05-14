@@ -82,6 +82,7 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
             let now = (new Date()).valueOf();
             //已经掉线
             if(now - recieveTick > 2000){
+                process.stdout.write(now - recieveTick);
                 httpsGetDepth();
             }
             setTimeout(checkConnecting,1000);
