@@ -12,8 +12,8 @@ binance.options({
 
 let type = "STOP_LOSS_LIMIT";
 let quantity = 0.0015;
-let price = 8640;
-let stopPrice = 8639;
+let price = 8630;
+let stopPrice = 8629;
 binance.balance(function(error, balances) {
 	// console.log("balances()", balances);
 	if ( typeof balances.BTC !== "undefined" ) {
