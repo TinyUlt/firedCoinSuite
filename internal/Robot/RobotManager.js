@@ -25,14 +25,24 @@ class RobotManager{
         this.nodeMap.set(id, node);
 
         this.GlobalData.tradCount++;
-        this.GlobalData.simulation.marketBuy(this.symbol,goodsIn,{type:'MARKET', newOrderRespType:"FULL"},(error, response)=>{node.recieveBuy(error, response)});
+        this.GlobalData.simulation.marketBuy(this.symbol,goodsIn,{type:'MARKET', newOrderRespType:"FULL"},(error, response)=>{
+            //如果失败这删除该机器人
+            if(!node.recieveBuy(error, response)){
+                self.removeRobot(node);
+            }
+        });
     }
     finishRobotNode(nowTick, node){
 
         let self = this;
         this.GlobalData.tradCount++;
 
-        this.GlobalData.simulation.marketSell(this.symbol, node.goodsIn,{type:'MARKET', newOrderRespType:"FULL"},(error, response)=>{node.recieveSell(error, response)});
+        this.GlobalData.simulation.marketSell(this.symbol, node.goodsIn,{type:'MARKET', newOrderRespType:"FULL"},(error, response)=>{
+            //如果成功这删除该机器人
+            if(node.recieveSell(error, response)){
+                self.removeRobot(node);
+            }
+        });
     }
 
     updateFalling(){
@@ -108,7 +118,7 @@ class RobotManager{
                 if(self.nodeMap.size === 1 && this.GlobalData.avgBuyEnable === 0){
                     self.finishRobotNode(nowTick, hasOne);
 
-                    self.nodeMap.delete(hasOne.id);
+                    // self.nodeMap.delete(hasOne.id);
 
                 }else if(this.GlobalData.sellAll === 0 &&  (self.nodeMap.size === 1 ||( lowstPrice === hasOne.currencyPerGoodsIn && secondLowstPrice > currencyPerGoodsBid)) ){
 
@@ -117,9 +127,12 @@ class RobotManager{
                 }else{
                     self.finishRobotNode(nowTick, hasOne);
 
-                    self.nodeMap.delete(hasOne.id);
+                    // self.nodeMap.delete(hasOne.id);
                 }
             }
+    }
+    removeRobot(node){
+        this.nodeMap.delete(node.id);
     }
 }
 module.exports = RobotManager;

@@ -19,7 +19,7 @@ class Environment{
             let manager = this.managers[i];
 
             if (manager !== null) {
-                if (this.GlobalData.tradCount < this.GlobalData.tradCountMax) {
+                if (this.GlobalData.tradCount < this.GlobalData.tradCountMax &&  this.GlobalData.delayUpdate === false) {
                     manager.update(tick, ask, bid);
                     this.GlobalData.updateRobotCount++;
                 }

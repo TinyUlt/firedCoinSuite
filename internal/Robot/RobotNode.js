@@ -25,7 +25,7 @@ class RobotNode  {
     recieveBuy(error, response){
         if(error !== null){
 
-            console.log("statusCode",error.statusCode);
+            console.log(" recieveBuy statusCode",error.statusCode);
             //服务器钱不够
             if(error.statusCode === 400){
 
@@ -40,24 +40,25 @@ class RobotNode  {
                 this.delayUpdate();
             }
 
-        }else{
-            if(response.status !== undefined && response.status === 'FILLED'  ){
-                let value = response;
-                for(let i = 0; i < value.fills.length; i++){
-
-                    let price = parseFloat(value.fills[i].price);
-                    let qty = parseFloat(value.fills[i].qty);
-                    let commission = parseFloat(value.fills[i].commission);
-                    this.buy( value.transactTime, price ,qty, commission);
-                    this.GlobalData.simulation.buyChangeBalance(price,qty,commission);
-
-                    this.GlobalData.buyTradCount ++;
-                }
-
-            }else{
-                console.log("marketBuy failed")
-            }
         }
+
+        if(response.status !== undefined && response.status === 'FILLED'  ){
+            let value = response;
+            for(let i = 0; i < value.fills.length; i++){
+
+                let price = parseFloat(value.fills[i].price);
+                let qty = parseFloat(value.fills[i].qty);
+                let commission = parseFloat(value.fills[i].commission);
+                this.buy( value.transactTime, price ,qty, commission);
+                this.GlobalData.simulation.buyChangeBalance(price,qty,commission);
+
+                this.GlobalData.buyTradCount ++;
+            }
+
+            return true;
+        }
+        console.log("marketBuy failed");
+        return false;
     }
 
     buy(
@@ -83,7 +84,7 @@ class RobotNode  {
     recieveSell(error, response){
 
         if(error !== null){
-            console.log("statusCode",error.statusCode);
+            console.log("recieveSell statusCode",error.statusCode);
 
             //服务器钱不够
             if(error.statusCode === 400){
@@ -119,9 +120,13 @@ class RobotNode  {
             this.sell(value.transactTime,count / qtys, commissions);
 
             this.GlobalData.sellTradCount ++;
-        }else{
-            console.log("marketSell failed")
+
+            return true;
         }
+
+        console.log("marketSell failed");
+
+        return false;
     }
     sell(nowTick, currencyPerGoodsOut, commissionOut){
         this.sellTick = nowTick;

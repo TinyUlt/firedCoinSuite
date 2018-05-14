@@ -118,7 +118,7 @@ class Simulation{
     }
 
     recieveDepth(nowTick, symbol, ask, bid){
-        if (this.GlobalData.run === true && this.GlobalData.delayUpdate === false ){
+        if (this.GlobalData.run === true ){
             this.simulTick = nowTick;
             this.update(symbol,ask, bid);
             this.callback(nowTick, symbol, ask, bid);
@@ -132,7 +132,7 @@ class Simulation{
 
             if(this.GlobalData.simulationConfig.useManagerAsksBids === 0){
                 roll = function(){
-                    if (self.GlobalData.run === true && self.GlobalData.delayUpdate === false ){
+                    if (self.GlobalData.run === true ){
 
                         self.binance.depthRequest(symbol,function(error,json){
                             process.stdout.write((new Date()).getSeconds()+' ');
