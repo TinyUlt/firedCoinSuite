@@ -14,19 +14,21 @@ let type = "STOP_LOSS_LIMIT";
 let quantity = 0.0015;
 let price = 8630;
 let stopPrice = 8629;
-binance.balance(function(error, balances) {
-	// console.log("balances()", balances);
-	if ( typeof balances.BTC !== "undefined" ) {
-		console.log("BTC balance: ", balances.BTC.available);
-	}
-    // if ( typeof balances.BNB!== "undefined" ) {
-    //     console.log("BNB balance: ", balances.BNB.available);
-    // }
-});
-binance.sell("BTCUSDT", quantity, price, {stopPrice: stopPrice, type: type},function(error, response) {
+// binance.balance(function(error, balances) {
+// 	// console.log("balances()", balances);
+// 	if ( typeof balances.BTC !== "undefined" ) {
+// 		console.log("BTC balance: ", balances.BTC.available);
+// 	}
+//     // if ( typeof balances.BNB!== "undefined" ) {
+//     //     console.log("BNB balance: ", balances.BNB.available);
+//     // }
+// });
+// binance.sell("BTCUSDT", quantity, price, {stopPrice: stopPrice, type: type},function(error, response) {
+//     console.log("BTCUSDT()",error, response);
+// });
+binance.buy("BTCUSDT", 0.0015, 6000, {type:'LIMIT', newOrderRespType:"FULL"}, function(error, response) {
     console.log("BTCUSDT()",error, response);
 });
-
 // Get bid/ask prices
 //binance.allBookTickers(function(error, json) {
 //  console.log("allBookTickers",json);
