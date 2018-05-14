@@ -45,8 +45,8 @@ class RobotManager{
 
         if(this.nodeMap.size === 0 && this.GlobalData.avgBuyEnable === 1){
 
-            // - Math.floor(Math.random()*4) * 0.000001
-            this.createRobotNode(nowTick, this.GlobalData.goodsAmountPerBuy , currencyPerGoodsAsk);
+
+            this.createRobotNode(nowTick, this.GlobalData.goodsAmountPerBuy - Math.floor(Math.random()*4) * 0.000001, currencyPerGoodsAsk);
             this.updateFalling();
         }
 
@@ -70,7 +70,7 @@ class RobotManager{
             && lowstPrice -  this.falling >= currencyPerGoodsAsk
             && this.GlobalData.avgBuyEnable === 1){
 
-            this.createRobotNode(nowTick, this.GlobalData.goodsAmountPerBuy , currencyPerGoodsAsk);
+            this.createRobotNode(nowTick, this.GlobalData.goodsAmountPerBuy - Math.floor(Math.random()*4) * 0.000001, currencyPerGoodsAsk);
 
             this.updateFalling();
         }
