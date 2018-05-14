@@ -38,7 +38,7 @@
   "lowPriceDfLimit":2000000,
   "enableBuy":1,
   "enableSell":1,
-  "currencyDfMail":1,
+  "currencyDfMail":10,
   "emailList":["b@ultbtc.com"],
   "readyIn":999999,
   "bidsCache":10,
