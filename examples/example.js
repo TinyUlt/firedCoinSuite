@@ -26,7 +26,7 @@ let stopPrice = 8629;
 // binance.sell("BTCUSDT", quantity, price, {stopPrice: stopPrice, type: type},function(error, response) {
 //     console.log("BTCUSDT()",error, response);
 // });
-binance.buy("BTCUSDT", 0.0015, 6000, {type:'LIMIT', newOrderRespType:"FULL"}, function(error, response) {
+binance.buy("BTCUSDT", 0.002, 6000, {type:'LIMIT', newOrderRespType:"FULL"}, function(error, response) {
     console.log("BTCUSDT()",error, response);
 });
 // Get bid/ask prices
