@@ -117,11 +117,13 @@ class Simulation{
         }
     }
 
-    managerAsksBids(nowTick, symbol, ask, bid){
-        this.simulTick = nowTick;
-        this.update(symbol,ask, bid);
-        this.callback(nowTick, symbol, ask, bid);
-        this.updateAvgMinMaxPrice();
+    recieveDepth(nowTick, symbol, ask, bid){
+        if (this.GlobalData.run === true && this.GlobalData.delayUpdate === false ){
+            this.simulTick = nowTick;
+            this.update(symbol,ask, bid);
+            this.callback(nowTick, symbol, ask, bid);
+            this.updateAvgMinMaxPrice();
+        }
     }
     depthCache( symbol, callback){
         let self = this;
@@ -136,15 +138,16 @@ class Simulation{
                             process.stdout.write((new Date()).getSeconds()+' ');
                             if (error === null){
                                 let nowTick = (new Date()).valueOf();
-                                self.simulTick = nowTick;
+                                // self.simulTick = nowTick;
 
                                 let ask =parseFloat(json.asks[0][0]);
                                 let bid =parseFloat(json.bids[0][0]);
                                 // console.log(ask, bid);
 
-                                self.update(symbol,ask, bid);
-                                callback(nowTick, symbol, ask, bid);
-                                self.updateAvgMinMaxPrice();
+                                self.recieveDepth(nowTick,symbol,ask, bid);
+                                // self.update(symbol,ask, bid);
+                                // callback(nowTick, symbol, ask, bid);
+                                // self.updateAvgMinMaxPrice();
                             } else {
                                 console.log(error);
                             }
@@ -168,10 +171,13 @@ class Simulation{
                         if(result.length !== 0){
                             self.simulTick = result[0]._id;
 
-                            self.update(symbol,result[0].ask , result[0].bid);
-                            callback(self.simulTick, symbol, result[0].ask, result[0].bid);
+                            // self.update(symbol,result[0].ask , result[0].bid);
+                            // callback(self.simulTick, symbol, result[0].ask, result[0].bid);
 
-                            self.updateAvgMinMaxPrice();
+                            // self.updateAvgMinMaxPrice();
+
+                            self.recieveDepth(result[0]._id ,symbol,result[0].ask, result[0].bid);
+
                             self.startTime+=1000;
                         }else{
                             self.GlobalData.simulationConfig.getDataSpeed = 2;

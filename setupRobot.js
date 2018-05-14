@@ -65,7 +65,7 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
                     // self.updateAvgMinMaxPrice();
                     for(let i = 0; i < firedCoinInfo.server.length; i ++){
                         let server = servers[i];
-                        server.GlobalData.simulation.managerAsksBids(nowTick, firedCoinInfo.SYMBOL, ask, bid)
+                        server.GlobalData.simulation.recieveDepth(nowTick, firedCoinInfo.SYMBOL, ask, bid)
                     }
                 } else {
                     console.log(error);
