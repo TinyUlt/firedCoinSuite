@@ -292,7 +292,7 @@ class Simulation{
                         callback( error, self.OriginBalance, self.RealBalance, self.SimulBalance, self.Price[self.commission+self.currency].ask );
                     }
                     else{
-                        console.log(error);
+                        console.log("request balance failed", error.statusCode);
                     }
                 });
             }else{

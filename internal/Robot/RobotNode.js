@@ -44,17 +44,25 @@ class RobotNode  {
 
         if(response.status !== undefined && response.status === 'FILLED'  ){
             let value = response;
+
+            let qtys = 0;
+            let commissions = 0;
+            let count = 0;
+
             for(let i = 0; i < value.fills.length; i++){
 
                 let price = parseFloat(value.fills[i].price);
                 let qty = parseFloat(value.fills[i].qty);
                 let commission = parseFloat(value.fills[i].commission);
-                this.buy( value.transactTime, price ,qty, commission);
-                this.GlobalData.simulation.buyChangeBalance(price,qty,commission);
 
-                this.GlobalData.buyTradCount ++;
+                count += price * qty;
+                qtys += qty;
+                commissions += commission;
+                this.GlobalData.simulation.buyChangeBalance(price,qty,commission);
             }
 
+            this.buy( value.transactTime, count / qtys ,qtys, commissions);
+            this.GlobalData.buyTradCount ++;
             return true;
         }
         console.log("marketBuy failed");
