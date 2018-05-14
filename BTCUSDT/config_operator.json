@@ -33,7 +33,7 @@
   "highstLimitTime":300000,
   "sellHighstScale":0.5,
   "Fees":0.0005,
-  "Multiple":1,
+  "Multiple":30,
   "useCurrencyMax":5000000,
   "lowPriceDfLimit":2000000,
   "enableBuy":1,
