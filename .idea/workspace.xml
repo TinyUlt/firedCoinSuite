@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1373018a-7bcb-4c8f-8e4b-bc71ad83ce39" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/internal/Robot/RobotManager.js" afterPath="$PROJECT_DIR$/internal/Robot/RobotManager.js" />
+      <change beforePath="$PROJECT_DIR$/examples/example.js" afterPath="$PROJECT_DIR$/examples/example.js" />
+      <change beforePath="$PROJECT_DIR$/internal/Robot/RobotNode.js" afterPath="$PROJECT_DIR$/internal/Robot/RobotNode.js" />
+      <change beforePath="$PROJECT_DIR$/setupRobot.js" afterPath="$PROJECT_DIR$/setupRobot.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,8 +22,8 @@
       <file leaf-file-name="RobotNode.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/internal/Robot/RobotNode.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="266" column="0" lean-forward="true" selection-start-line="266" selection-start-column="0" selection-end-line="266" selection-end-column="0" />
+            <state relative-caret-position="622">
+              <caret line="99" column="9" lean-forward="true" selection-start-line="99" selection-start-column="9" selection-end-line="99" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -30,18 +32,18 @@
       <file leaf-file-name="setupRobot.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/setupRobot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="40" lean-forward="false" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
+            <state relative-caret-position="520">
+              <caret line="33" column="43" lean-forward="false" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RobotManager.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RobotManager.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/internal/Robot/RobotManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="56" column="46" lean-forward="true" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
+            <state relative-caret-position="444">
+              <caret line="34" column="143" lean-forward="false" selection-start-line="34" selection-start-column="143" selection-end-line="34" selection-end-column="143" />
               <folding />
             </state>
           </provider>
@@ -77,16 +79,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="getAsksBids.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/getAsksBids.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="501">
-              <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="node-binance-api.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/internal/node-binance-api.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -102,8 +94,18 @@
       <file leaf-file-name="config_operator.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BTCUSDT/config_operator.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="25" column="30" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="30" />
+            <state relative-caret-position="422">
+              <caret line="25" column="29" lean-forward="true" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="example.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/examples/example.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -147,6 +149,7 @@
       <find>serverInfo</find>
       <find>binance</find>
       <find>goodsAmountPerBuy</find>
+      <find>delayUpdate</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -161,22 +164,22 @@
         <option value="$PROJECT_DIR$/mailer.js" />
         <option value="$PROJECT_DIR$/node-binance-api.js" />
         <option value="$PROJECT_DIR$/getAsksBids.js" />
-        <option value="$PROJECT_DIR$/examples/example.js" />
         <option value="$PROJECT_DIR$/ETHBTC/config_operator.json" />
         <option value="$PROJECT_DIR$/friedcoin.js" />
         <option value="$PROJECT_DIR$/simulation-binance-api.js" />
         <option value="$PROJECT_DIR$/Robot0/RobotNode.js" />
         <option value="$PROJECT_DIR$/Robot0/RobotManager.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/internal/Robot/RobotNode.js" />
         <option value="$PROJECT_DIR$/internal/server.js" />
         <option value="$PROJECT_DIR$/internal/node-binance-api.js" />
         <option value="$PROJECT_DIR$/BTCUSDT/config_operator.json" />
         <option value="$PROJECT_DIR$/binanceweb.js" />
         <option value="$PROJECT_DIR$/BTCUSDT/config_simulation.json" />
-        <option value="$PROJECT_DIR$/setupRobot.js" />
         <option value="$PROJECT_DIR$/internal/simulation-binance-api.js" />
         <option value="$PROJECT_DIR$/internal/Robot/RobotManager.js" />
+        <option value="$PROJECT_DIR$/internal/Robot/RobotNode.js" />
+        <option value="$PROJECT_DIR$/setupRobot.js" />
+        <option value="$PROJECT_DIR$/examples/example.js" />
       </list>
     </option>
   </component>
@@ -200,7 +203,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="279" />
+    <option name="x" value="243" />
     <option name="y" value="23" />
     <option name="width" value="1904" />
     <option name="height" value="1337" />
@@ -233,6 +236,11 @@
               <item name="firedCoinSuite" type="b2602c69:ProjectViewProjectNode" />
               <item name="firedCoinSuite" type="462c0819:PsiDirectoryNode" />
               <item name="BTCUSDT" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firedCoinSuite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firedCoinSuite" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="firedCoinSuite" type="b2602c69:ProjectViewProjectNode" />
@@ -313,15 +321,15 @@
       <workItem from="1525967359029" duration="5000" />
       <workItem from="1525967410523" duration="21688000" />
       <workItem from="1526219564626" duration="247000" />
-      <workItem from="1526219856441" duration="15304000" />
+      <workItem from="1526219856441" duration="16877000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46482000" />
+    <option name="totallyTimeSpent" value="48055000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="279" y="23" width="1904" height="1337" extended-state="0" />
+    <frame x="243" y="23" width="1904" height="1337" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2496017" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -332,7 +340,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27858293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22302738" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3996777" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -496,13 +504,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mailer.js" />
-    <entry file="file://$PROJECT_DIR$/examples/example.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="114" column="19" lean-forward="true" selection-start-line="114" selection-start-column="19" selection-end-line="114" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ETHBTC/config_simulation.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -565,14 +566,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setupRobot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="40" lean-forward="false" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/internal/node-binance-api.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1049">
@@ -599,26 +592,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BTCUSDT/config_operator.json">
+    <entry file="file://$PROJECT_DIR$/internal/Robot/RobotManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="25" column="30" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="30" />
+        <state relative-caret-position="444">
+          <caret line="34" column="143" lean-forward="false" selection-start-line="34" selection-start-column="143" selection-end-line="34" selection-end-column="143" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/internal/Robot/RobotNode.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="266" column="0" lean-forward="true" selection-start-line="266" selection-start-column="0" selection-end-line="266" selection-end-column="0" />
+        <state relative-caret-position="622">
+          <caret line="99" column="9" lean-forward="true" selection-start-line="99" selection-start-column="9" selection-end-line="99" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/Robot/RobotManager.js">
+    <entry file="file://$PROJECT_DIR$/BTCUSDT/config_operator.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="56" column="46" lean-forward="true" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
+        <state relative-caret-position="422">
+          <caret line="25" column="29" lean-forward="true" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setupRobot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="33" column="43" lean-forward="false" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/example.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
           <folding />
         </state>
       </provider>

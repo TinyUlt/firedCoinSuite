@@ -95,7 +95,7 @@ class RobotNode  {
             }
             //速率超标
             else if(error.statusCode === 429){
-                self.delayUpdate();
+                this.delayUpdate();
             }
         }
 

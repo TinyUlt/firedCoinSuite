@@ -1,13 +1,19 @@
-const binance = require('../node-binance-api.js');
+const Binance = require('../internal/node-binance-api.js');
+let binance = (new Binance()).core;
 
-APIKEY = process.env.APIKEY;
-APISECRET = process.env.APISECRET;
-console.log(APIKEY);
-console.log(APISECRET);
+let firedCoinInfo = JSON.parse(fs.readFileSync(process.env.FiredCoinInfoPath));
+
+let server = firedCoinInfo.server[1];
 binance.options({
-  'APIKEY':APIKEY,
-  'APISECRET':APISECRET
+    'APIKEY':server.APIKEY,
+    'APISECRET':server.APISECRET
 });
+
+let type = "STOP_LOSS";
+let quantity = 0.0015;
+let price = 8640;
+let stopPrice = 8639;
+binance.sell("BTCUSDT", quantity, price, {stopPrice: stopPrice, type: type});
 
 // Get bid/ask prices
 //binance.allBookTickers(function(error, json) {
