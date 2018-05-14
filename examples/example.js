@@ -13,7 +13,9 @@ let type = "STOP_LOSS";
 let quantity = 0.0015;
 let price = 8640;
 let stopPrice = 8639;
-binance.sell("BTCUSDT", quantity, price, {stopPrice: stopPrice, type: type});
+binance.sell("BTCUSDT", quantity, price, {stopPrice: stopPrice, type: type},function(error, response) {
+    console.log("BTCUSDT()",error, response);
+});
 
 // Get bid/ask prices
 //binance.allBookTickers(function(error, json) {

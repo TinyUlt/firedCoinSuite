@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1373018a-7bcb-4c8f-8e4b-bc71ad83ce39" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/examples/example.js" afterPath="$PROJECT_DIR$/examples/example.js" />
-      <change beforePath="$PROJECT_DIR$/internal/Robot/RobotNode.js" afterPath="$PROJECT_DIR$/internal/Robot/RobotNode.js" />
-      <change beforePath="$PROJECT_DIR$/setupRobot.js" afterPath="$PROJECT_DIR$/setupRobot.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -104,8 +101,8 @@
       <file leaf-file-name="example.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/examples/example.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+            <state relative-caret-position="252">
+              <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -321,12 +318,12 @@
       <workItem from="1525967359029" duration="5000" />
       <workItem from="1525967410523" duration="21688000" />
       <workItem from="1526219564626" duration="247000" />
-      <workItem from="1526219856441" duration="16877000" />
+      <workItem from="1526219856441" duration="16916000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48055000" />
+    <option name="totallyTimeSpent" value="48094000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="243" y="23" width="1904" height="1337" extended-state="0" />
@@ -626,8 +623,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/example.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        <state relative-caret-position="252">
+          <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
           <folding />
         </state>
       </provider>
