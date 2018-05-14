@@ -133,7 +133,7 @@ class RobotNode  {
         }
 
         console.log("marketSell failed");
-
+        this.sellDone = 0;
         return false;
     }
     sell(nowTick, currencyPerGoodsOut, commissionOut){

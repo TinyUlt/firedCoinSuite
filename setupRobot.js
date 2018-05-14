@@ -44,42 +44,67 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
         }
         setConfig();
         update();
-
         function update(){
 
-            getDepth();
             updateInfo();
             getConfig();
-            setTimeout(update,1000);
+
         }
-        function getDepth(){
+
+        function recieveDepth(tick, ask, bid){
+            for(let i = 0; i < firedCoinInfo.server.length; i ++){
+                let server = servers[i];
+                if(server.GlobalData.simulation !== null){
+
+                    server.GlobalData.simulation.recieveDepth(tick, firedCoinInfo.SYMBOL, ask, bid);
+                }
+            }
+            update();
+        }
+        let recieveTick = (new Date()).valueOf();
+
+        if (simulationConfig.useManagerAsksBids && simulationConfig.useRealData === 1){
+            binance.websockets.depthCache([firedCoinInfo.SYMBOL],function(symbol, depth){
+                process.stdout.write("wsk");
+                let recieveTick = (new Date()).valueOf();
+                let max = 1;
+                let bids = binance.sortBids(depth.bids, max);
+                let asks = binance.sortAsks(depth.asks, max);
+
+                let bid =parseFloat(binance.first(bids)) ;
+                let ask = parseFloat(binance.first(asks)) ;
+
+                recieveDepth(recieveTick, ask, bid);
+            },10);
+        }
+
+        function checkConnecting() {
+            let now = (new Date()).valueOf();
+            //已经掉线
+            if(now - recieveTick > 2000){
+                httpsGetDepth();
+            }
+            setTimeout(checkConnecting,1000);
+        }
+
+        checkConnecting();
+
+
+
+        function httpsGetDepth(){
 
             if (simulationConfig.useManagerAsksBids && simulationConfig.useRealData === 1){
                 binance.depthRequest(firedCoinInfo.SYMBOL,function(error,json){
-                    process.stdout.write((new Date()).getSeconds()+' ');
+                    process.stdout.write("htp");
                     if (error === null){
                         let nowTick = (new Date()).valueOf();
-                        // self.simulTick = nowTick;
 
                         let ask =parseFloat(json.asks[0][0]);
                         let bid =parseFloat(json.bids[0][0]);
-                        // console.log(ask, bid);
-
-                        // self.update(symbol,ask, bid);
-                        // callback(nowTick, symbol, ask, bid);
-                        // self.updateAvgMinMaxPrice();
-                        for(let i = 0; i < firedCoinInfo.server.length; i ++){
-                            let server = servers[i];
-                            if(server.GlobalData.simulation !== null){
-
-                                server.GlobalData.simulation.recieveDepth(nowTick, firedCoinInfo.SYMBOL, ask, bid);
-                            }
-
-                        }
+                        recieveDepth(nowTick, ask, bid);
                     } else {
                         console.log(error);
                     }
-
                 },5);
             }
         }
@@ -103,7 +128,6 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
                     };
                     hasValue = true;
                 }
-
             }
             if(hasValue === true){
                 let where = {_id:0};
