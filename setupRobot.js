@@ -66,7 +66,7 @@ MongoClient.connect(firedCoinInfo.MONGODB, function(err, db) {
         if (simulationConfig.useManagerAsksBids && simulationConfig.useRealData === 1){
             binance.websockets.depthCache([firedCoinInfo.SYMBOL],function(symbol, depth){
                 process.stdout.write("wsk");
-                let recieveTick = (new Date()).valueOf();
+                recieveTick = (new Date()).valueOf();
                 let max = 1;
                 let bids = binance.sortBids(depth.bids, max);
                 let asks = binance.sortAsks(depth.asks, max);
