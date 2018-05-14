@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1373018a-7bcb-4c8f-8e4b-bc71ad83ce39" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/internal/simulation-binance-api.js" afterPath="$PROJECT_DIR$/internal/simulation-binance-api.js" />
       <change beforePath="$PROJECT_DIR$/setupRobot.js" afterPath="$PROJECT_DIR$/setupRobot.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -28,11 +27,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setupRobot.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="setupRobot.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/setupRobot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="67" column="60" lean-forward="false" selection-start-line="67" selection-start-column="60" selection-end-line="67" selection-end-column="60" />
+            <state relative-caret-position="577">
+              <caret line="63" column="59" lean-forward="true" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -48,20 +47,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="simulation-binance-api.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/internal/simulation-binance-api.js">
+      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/internal/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+            <state relative-caret-position="520">
+              <caret line="101" column="68" lean-forward="false" selection-start-line="101" selection-start-column="68" selection-end-line="101" selection-end-column="68" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="null/BTCUSDT_r0/config" pinned="false" current-in-tab="false">
-        <entry file="mongo://null/BTCUSDT_r0/config">
-          <provider selected="true" editor-type-id="MongoData">
-            <state />
+      <file leaf-file-name="simulation-binance-api.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/internal/simulation-binance-api.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="445">
+              <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -143,6 +145,7 @@
       <find>binance</find>
       <find>delayUpdate</find>
       <find>goodsAmountPerBuy</find>
+      <find>simulation</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -171,8 +174,8 @@
         <option value="$PROJECT_DIR$/examples/example.js" />
         <option value="$PROJECT_DIR$/internal/Robot/RobotManager.js" />
         <option value="$PROJECT_DIR$/BTCUSDT/config_operator.json" />
-        <option value="$PROJECT_DIR$/setupRobot.js" />
         <option value="$PROJECT_DIR$/internal/simulation-binance-api.js" />
+        <option value="$PROJECT_DIR$/setupRobot.js" />
       </list>
     </option>
   </component>
@@ -315,12 +318,12 @@
       <workItem from="1525967410523" duration="21688000" />
       <workItem from="1526219564626" duration="247000" />
       <workItem from="1526219856441" duration="19947000" />
-      <workItem from="1526268462717" duration="1938000" />
+      <workItem from="1526268462717" duration="2229000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53063000" />
+    <option name="totallyTimeSpent" value="53354000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="98" y="23" width="1904" height="1337" extended-state="0" />
@@ -552,14 +555,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5508">
-          <caret line="324" column="17" lean-forward="false" selection-start-line="324" selection-start-column="17" selection-end-line="324" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BTCUSDT/config_simulation.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -610,18 +605,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setupRobot.js">
+    <entry file="file://$PROJECT_DIR$/internal/simulation-binance-api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="67" column="60" lean-forward="false" selection-start-line="67" selection-start-column="60" selection-end-line="67" selection-end-column="60" />
+        <state relative-caret-position="445">
+          <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/simulation-binance-api.js">
+    <entry file="file://$PROJECT_DIR$/internal/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+        <state relative-caret-position="520">
+          <caret line="101" column="68" lean-forward="false" selection-start-line="101" selection-start-column="68" selection-end-line="101" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setupRobot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="577">
+          <caret line="63" column="59" lean-forward="true" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
           <folding />
         </state>
       </provider>
